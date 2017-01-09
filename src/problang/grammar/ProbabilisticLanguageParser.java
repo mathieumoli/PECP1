@@ -1,15 +1,19 @@
-// Generated from /home/user/Documents/EPU/SI5/PreuvesCrypto/Projet/Projet1/antlr/ProbalisticLanguage.g4 by ANTLR 4.5.3
-import org.antlr.v4.runtime.atn.*;
-import org.antlr.v4.runtime.dfa.DFA;
+package problang.grammar;
+// Generated from /home/user/Documents/EPU/SI5/PreuvesCrypto/Projet/Projet1/antlr/ProbabilisticLanguage.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.ParserATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.ParseTreeVisitor;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ProbalisticLanguageParser extends Parser {
+public class ProbabilisticLanguageParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -72,7 +76,7 @@ public class ProbalisticLanguageParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "ProbalisticLanguage.g4"; }
+	public String getGrammarFileName() { return "ProbabilisticLanguage.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -83,7 +87,7 @@ public class ProbalisticLanguageParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public ProbalisticLanguageParser(TokenStream input) {
+	public ProbabilisticLanguageParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
@@ -100,15 +104,15 @@ public class ProbalisticLanguageParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_program; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterProgram(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterProgram(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitProgram(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitProgram(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitProgram(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitProgram(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -170,15 +174,15 @@ public class ProbalisticLanguageParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_code; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterCode(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterCode(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitCode(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitCode(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitCode(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitCode(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -248,15 +252,15 @@ public class ProbalisticLanguageParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_affectation; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterAffectation(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterAffectation(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitAffectation(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitAffectation(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitAffectation(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitAffectation(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -310,15 +314,15 @@ public class ProbalisticLanguageParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_skip; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterSkip(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterSkip(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitSkip(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitSkip(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitSkip(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitSkip(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -360,15 +364,15 @@ public class ProbalisticLanguageParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ifStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterIfStatement(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterIfStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitIfStatement(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitIfStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitIfStatement(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitIfStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -429,15 +433,15 @@ public class ProbalisticLanguageParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_whileStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterWhileStatement(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterWhileStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitWhileStatement(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitWhileStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitWhileStatement(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitWhileStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -478,22 +482,22 @@ public class ProbalisticLanguageParser extends Parser {
 	}
 
 	public static class VarContext extends ParserRuleContext {
-		public TerminalNode IDENT() { return getToken(ProbalisticLanguageParser.IDENT, 0); }
+		public TerminalNode IDENT() { return getToken(ProbabilisticLanguageParser.IDENT, 0); }
 		public VarContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_var; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterVar(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterVar(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitVar(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitVar(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitVar(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitVar(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -520,7 +524,7 @@ public class ProbalisticLanguageParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
-		public TerminalNode NUMBER() { return getToken(ProbalisticLanguageParser.NUMBER, 0); }
+		public TerminalNode NUMBER() { return getToken(ProbabilisticLanguageParser.NUMBER, 0); }
 		public VarContext var() {
 			return getRuleContext(VarContext.class,0);
 		}
@@ -539,15 +543,15 @@ public class ProbalisticLanguageParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_expr; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterExpr(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitExpr(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitExpr(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -623,24 +627,24 @@ public class ProbalisticLanguageParser extends Parser {
 	}
 
 	public static class OpContext extends ParserRuleContext {
-		public TerminalNode ADD() { return getToken(ProbalisticLanguageParser.ADD, 0); }
-		public TerminalNode SUB() { return getToken(ProbalisticLanguageParser.SUB, 0); }
-		public TerminalNode MULT() { return getToken(ProbalisticLanguageParser.MULT, 0); }
+		public TerminalNode ADD() { return getToken(ProbabilisticLanguageParser.ADD, 0); }
+		public TerminalNode SUB() { return getToken(ProbabilisticLanguageParser.SUB, 0); }
+		public TerminalNode MULT() { return getToken(ProbabilisticLanguageParser.MULT, 0); }
 		public OpContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_op; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterOp(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterOp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitOp(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitOp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitOp(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitOp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -688,15 +692,15 @@ public class ProbalisticLanguageParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_cond; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterCond(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterCond(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitCond(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitCond(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitCond(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitCond(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -727,27 +731,27 @@ public class ProbalisticLanguageParser extends Parser {
 	}
 
 	public static class CompContext extends ParserRuleContext {
-		public TerminalNode EQ() { return getToken(ProbalisticLanguageParser.EQ, 0); }
-		public TerminalNode NEQ() { return getToken(ProbalisticLanguageParser.NEQ, 0); }
-		public TerminalNode GT() { return getToken(ProbalisticLanguageParser.GT, 0); }
-		public TerminalNode GE() { return getToken(ProbalisticLanguageParser.GE, 0); }
-		public TerminalNode LT() { return getToken(ProbalisticLanguageParser.LT, 0); }
-		public TerminalNode LE() { return getToken(ProbalisticLanguageParser.LE, 0); }
+		public TerminalNode EQ() { return getToken(ProbabilisticLanguageParser.EQ, 0); }
+		public TerminalNode NEQ() { return getToken(ProbabilisticLanguageParser.NEQ, 0); }
+		public TerminalNode GT() { return getToken(ProbabilisticLanguageParser.GT, 0); }
+		public TerminalNode GE() { return getToken(ProbabilisticLanguageParser.GE, 0); }
+		public TerminalNode LT() { return getToken(ProbabilisticLanguageParser.LT, 0); }
+		public TerminalNode LE() { return getToken(ProbabilisticLanguageParser.LE, 0); }
 		public CompContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_comp; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterComp(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterComp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitComp(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitComp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitComp(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitComp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -780,26 +784,26 @@ public class ProbalisticLanguageParser extends Parser {
 	}
 
 	public static class ProbFuncContext extends ParserRuleContext {
-		public List<TerminalNode> NUMBER() { return getTokens(ProbalisticLanguageParser.NUMBER); }
+		public List<TerminalNode> NUMBER() { return getTokens(ProbabilisticLanguageParser.NUMBER); }
 		public TerminalNode NUMBER(int i) {
-			return getToken(ProbalisticLanguageParser.NUMBER, i);
+			return getToken(ProbabilisticLanguageParser.NUMBER, i);
 		}
-		public TerminalNode ZQ() { return getToken(ProbalisticLanguageParser.ZQ, 0); }
+		public TerminalNode ZQ() { return getToken(ProbabilisticLanguageParser.ZQ, 0); }
 		public ProbFuncContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_probFunc; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).enterProbFunc(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterProbFunc(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProbalisticLanguageListener ) ((ProbalisticLanguageListener)listener).exitProbFunc(this);
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitProbFunc(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbalisticLanguageVisitor ) return ((ProbalisticLanguageVisitor<? extends T>)visitor).visitProbFunc(this);
+			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitProbFunc(this);
 			else return visitor.visitChildren(this);
 		}
 	}

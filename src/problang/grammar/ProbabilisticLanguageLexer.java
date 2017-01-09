@@ -1,15 +1,14 @@
-// Generated from /home/user/Documents/EPU/SI5/PreuvesCrypto/Projet/Projet1/antlr/ProbalisticLanguage.g4 by ANTLR 4.5.3
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
+package problang.grammar;
+// Generated from /home/user/Documents/EPU/SI5/PreuvesCrypto/Projet/Projet1/antlr/ProbabilisticLanguage.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.LexerATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ProbalisticLanguageLexer extends Lexer {
+public class ProbabilisticLanguageLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -73,13 +72,13 @@ public class ProbalisticLanguageLexer extends Lexer {
 	}
 
 
-	public ProbalisticLanguageLexer(CharStream input) {
+	public ProbabilisticLanguageLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "ProbalisticLanguage.g4"; }
+	public String getGrammarFileName() { return "ProbabilisticLanguage.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

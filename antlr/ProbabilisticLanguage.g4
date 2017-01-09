@@ -1,4 +1,4 @@
-grammar ProbalisticLanguage;
+grammar ProbabilisticLanguage;
 
 fragment ESC :   '\\' (["\\/bfnrt] | UNICODE) ;
 fragment UNICODE : 'u' HEX HEX HEX HEX ;

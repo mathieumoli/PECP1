@@ -1,97 +1,98 @@
-// Generated from /home/user/Documents/EPU/SI5/PreuvesCrypto/Projet/Projet1/antlr/ProbalisticLanguage.g4 by ANTLR 4.5.3
+package problang.grammar;
+// Generated from /home/user/Documents/EPU/SI5/PreuvesCrypto/Projet/Projet1/antlr/ProbabilisticLanguage.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
- * This class provides an empty implementation of {@link ProbalisticLanguageVisitor},
+ * This class provides an empty implementation of {@link ProbabilisticLanguageVisitor},
  * which can be extended to create a visitor which only needs to handle a subset
  * of the available methods.
  *
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public class ProbalisticLanguageBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements ProbalisticLanguageVisitor<T> {
+public class ProbabilisticLanguageBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements ProbabilisticLanguageVisitor<T> {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitProgram(ProbalisticLanguageParser.ProgramContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProgram(ProbabilisticLanguageParser.ProgramContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCode(ProbalisticLanguageParser.CodeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitCode(ProbabilisticLanguageParser.CodeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitAffectation(ProbalisticLanguageParser.AffectationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAffectation(ProbabilisticLanguageParser.AffectationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSkip(ProbalisticLanguageParser.SkipContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSkip(ProbabilisticLanguageParser.SkipContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIfStatement(ProbalisticLanguageParser.IfStatementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIfStatement(ProbabilisticLanguageParser.IfStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitWhileStatement(ProbalisticLanguageParser.WhileStatementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWhileStatement(ProbabilisticLanguageParser.WhileStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVar(ProbalisticLanguageParser.VarContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVar(ProbabilisticLanguageParser.VarContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExpr(ProbalisticLanguageParser.ExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitExpr(ProbabilisticLanguageParser.ExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOp(ProbalisticLanguageParser.OpContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOp(ProbabilisticLanguageParser.OpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCond(ProbalisticLanguageParser.CondContext ctx) { return visitChildren(ctx); }
+	@Override public T visitCond(ProbabilisticLanguageParser.CondContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitComp(ProbalisticLanguageParser.CompContext ctx) { return visitChildren(ctx); }
+	@Override public T visitComp(ProbabilisticLanguageParser.CompContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitProbFunc(ProbalisticLanguageParser.ProbFuncContext ctx) { return visitChildren(ctx); }
+	@Override public T visitProbFunc(ProbabilisticLanguageParser.ProbFuncContext ctx) { return visitChildren(ctx); }
 }
