@@ -32,7 +32,7 @@ ifStatement: 'if' '(' cond ')' 'then' '{' code '}' 'else' '{' code '}';
 whileStatement: 'while' '(' cond ')' 'do' '{' program '}';
 
 var: IDENT;
-expr: NUMBER | var | expr op expr;
+expr: (NUMBER | var) (op expr)*;
 op: ADD | SUB | MULT;
 
 cond: expr comp expr;
