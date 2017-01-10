@@ -25,4 +25,10 @@ public class Program {
     public ProbabilisticLanguageParser.CodeContext getCommand(int i) {
         return commands.get(i);
     }
- }
+
+    @Override
+    public String toString() {
+        //TODO je sais pas encore comment afficher
+        return commands.toString();
+    }
+}

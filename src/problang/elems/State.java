@@ -16,4 +16,9 @@ public class State {
     public Map<String, Integer> getMemory() {
         return memory;
     }
+
+    @Override
+    public String toString() {
+        return memory.toString();
+    }
 }

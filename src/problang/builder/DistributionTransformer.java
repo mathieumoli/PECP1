@@ -18,14 +18,14 @@ public final class DistributionTransformer {
 
             // Si la première commande est une affectation
             if (p.getCommand(0).affectation() != null) {
-                d1 = applyAffectationRule(c, d1);
+                d1 = applyAffectationRule(c, d1, d);
             }
             // TODO les autres regles
         }
         return d1;
     }
 
-    private static Distribution applyAffectationRule(Configuration c, Distribution d1) {
+    private static Distribution applyAffectationRule(Configuration c, Distribution d1, Distribution d) {
         Program p = c.getProgram();
         State s = c.getState();
 
@@ -56,7 +56,7 @@ public final class DistributionTransformer {
             s.getMemory().put(var, value);
 
             // TODO si on a déjà cette configuration additionner la probabilité
-            d1.getElements().put(new Configuration(p1, s), 1.0 * d1.getElements().get(c));
+            d1.getElements().put(new Configuration(p1, s), 1.0 * d.getElements().get(c));
         }
         // Deuxième cas : on affecte une fonction probabiliste
         else {

@@ -19,4 +19,9 @@ public class Configuration {
     public State getState() {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return "<" + program + ", " + state + ">";
+    }
 }

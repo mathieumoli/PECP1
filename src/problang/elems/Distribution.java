@@ -16,4 +16,9 @@ public class Distribution {
     public Map<Configuration, Double> getElements() {
         return elements;
     }
+
+    @Override
+    public String toString() {
+        return elements.toString();
+    }
 }

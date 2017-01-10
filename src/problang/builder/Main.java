@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             // initialiser le lexer et le parser
-            ANTLRInputStream in = new ANTLRInputStream(new FileReader("Projet1/affectation"));
+            ANTLRInputStream in = new ANTLRInputStream(new FileReader("out/production/Projet1/affectation"));
             ProbabilisticLanguageLexer lexer = new ProbabilisticLanguageLexer(in);
             BufferedTokenStream tokens = new CommonTokenStream(lexer);
             ProbabilisticLanguageParser parser = new ProbabilisticLanguageParser(tokens);
@@ -31,8 +31,10 @@ public class Main {
             Distribution initialDistribution = new Distribution();
             initialDistribution.getElements().put(initialConfiguration,1.0);
 
-            DistributionTransformer.transformation(initialDistribution);
+            System.out.println(initialDistribution);
 
+            Distribution finalDistribution = DistributionTransformer.transformation(initialDistribution);
+            System.out.println(finalDistribution);
         } catch (IOException e) {
             e.printStackTrace();
         }
