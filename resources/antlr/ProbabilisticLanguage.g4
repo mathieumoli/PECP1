@@ -22,7 +22,7 @@ ZQ : 'ZQ';
 IDENT : [a-zA-Z_][a-zA-Z_0-9]*;
 NUMBER : [\-]?[0-9]+;
 
-program: code (';' code)*;
+program: code (';' code)* EOF;
 
 code : affectation | skip | ifStatement | whileStatement;
 
@@ -32,7 +32,7 @@ ifStatement: 'if' '(' cond ')' 'then' '{' code '}' 'else' '{' code '}';
 whileStatement: 'while' '(' cond ')' 'do' '{' program '}';
 
 var: IDENT;
-expr: (NUMBER | var) (op expr)*;
+expr: (NUMBER | var) (op expr)?;
 op: ADD | SUB | MULT;
 
 cond: expr comp expr;

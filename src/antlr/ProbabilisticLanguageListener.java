@@ -1,5 +1,5 @@
-package problang.grammar;
-// Generated from /home/user/Documents/EPU/SI5/PreuvesCrypto/Projet/Projet1/antlr/ProbabilisticLanguage.g4 by ANTLR 4.5.3
+// Generated from /home/user/Documents/EPU/SI5/PreuvesCrypto/Projet/Projet1/resources/antlr/ProbabilisticLanguage.g4 by ANTLR 4.5.3
+package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**

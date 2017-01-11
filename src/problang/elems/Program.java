@@ -1,6 +1,7 @@
 package problang.elems;
 
-import problang.grammar.ProbabilisticLanguageParser;
+
+import antlr.ProbabilisticLanguageParser;
 
 import java.util.List;
 
@@ -28,7 +29,14 @@ public class Program {
 
     @Override
     public String toString() {
-        //TODO je sais pas encore comment afficher
-        return commands.toString();
+        //encore des petits problemes
+        String ret = "";
+        for (ProbabilisticLanguageParser.CodeContext command : commands) {
+            ret += command.getText() + "; ";
+        }
+        if (ret.isEmpty()) {
+            ret = "tic";
+        }
+        return ret;
     }
 }

@@ -1,5 +1,7 @@
 package problang.builder;
 
+import antlr.ProbabilisticLanguageLexer;
+import antlr.ProbabilisticLanguageParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -7,8 +9,6 @@ import problang.elems.Configuration;
 import problang.elems.Distribution;
 import problang.elems.Program;
 import problang.elems.State;
-import problang.grammar.ProbabilisticLanguageLexer;
-import problang.grammar.ProbabilisticLanguageParser;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             // initialiser le lexer et le parser
-            ANTLRInputStream in = new ANTLRInputStream(new FileReader("out/production/Projet1/affectation"));
+            ANTLRInputStream in = new ANTLRInputStream(new FileReader("out/production/Projet1/FichiersTest/affectation"));
             ProbabilisticLanguageLexer lexer = new ProbabilisticLanguageLexer(in);
             BufferedTokenStream tokens = new CommonTokenStream(lexer);
             ProbabilisticLanguageParser parser = new ProbabilisticLanguageParser(tokens);
