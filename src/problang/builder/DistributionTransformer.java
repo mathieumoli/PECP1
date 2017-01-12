@@ -1,15 +1,18 @@
 package problang.builder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import antlr.ProbabilisticLanguageParser;
+import antlr.ProbabilisticLanguageParser.CodeContext;
+import problang.elems.Configuration;
+import problang.elems.Distribution;
+import problang.elems.Program;
+import problang.elems.State;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
-import antlr.ProbabilisticLanguageParser.CodeContext;
-import problang.elems.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lorynf on 09/01/17.
@@ -25,16 +28,28 @@ public final class DistributionTransformer {
             // On récupère le programme
             Program p = c.getProgram();
 
-            // Si la première commande est une affectation
-            if (p.getCommand(0).affectation() != null) {
-                d1 = applyAffectationRule(c, d1, d);
+            // si le programme est vide (tic)
+            if (p.getCommands().isEmpty()) {
+                d1.getElements().put(c, d.getElements().get(c));
+            } else {
+                // Si la première commande est une affectation
+                if (p.getCommand(0).affectation() != null) {
+                    d1 = applyAffectationRule(c, d1, d);
+                }
+                // Si c'est un while
+                else if (p.getCommand(0).whileStatement() != null) {
+                    d1 = applyWhileRule(c, d1, d);
+                }
+                // Si c'est un if
+                else if (p.getCommand(0).ifStatement() != null) {
+                    d1 = applyIfRule(c, d1, d);
+                }
+                // Il ne reste que le skip (normalement)
+                else {
+                    assert p.getCommand(0).skip() != null;
+                    d1 = applySkipRule(c, d1, d);
+                }
             }
-            else if(p.getCommand(0).whileStatement() != null){
-            	d1= applyWhileRule(c,d1,d);
-					
-            	}           	          
-            
-            // TODO les autres regles
         }
         return d1;
     }
@@ -47,26 +62,11 @@ public final class DistributionTransformer {
         Program p1 = new Program(p.getCommands().subList(1, p.getCommands().size()));
 
         String var = p.getCommand(0).affectation().var().IDENT().getText();
-        //System.out.println("var:"+var);
 
         // Premier cas : on affecte une expression
         if (p.getCommand(0).affectation().expr() != null) {
-            int value;
-            // Si c'est un nombre, on récupère la valeur
-            if (p.getCommand(0).affectation().expr().NUMBER() != null) {
-                value = Integer.parseInt(p.getCommand(0).affectation().expr().NUMBER().getText());
-            }
-            // Si c'est une variable, il faut récupérer la valeur dans la mémoire
-            else {
-                assert p.getCommand(0).affectation().expr().var() != null;
-                //TODO
-                value = 0;
-            }
-            // Si il y a une opération...
-            if (p.getCommand(0).affectation().expr().op() != null) {
-                //TODO
-                value = 0;
-            }
+            int value = handleExpr(p.getCommand(0).affectation().expr(), s);
+
             // TODO verifier que var n'est pas déjà dedans
             s.getMemory().put(var, value);
 
@@ -80,7 +80,46 @@ public final class DistributionTransformer {
         }
         return d1;
     }
-    
+
+    private static int handleExpr(ProbabilisticLanguageParser.ExprContext expr, State s) {
+        int value = getValue(expr.value(),s);
+        // Si il y a une opération...
+        if (expr.operation() != null)
+            value = handleOperation(expr,s,value);
+        return value;
+    }
+
+    private static int getValue(ProbabilisticLanguageParser.ValueContext valueContext, State s) {
+        int value;
+        // Si c'est un nombre, on récupère la valeur
+        if (valueContext.NUMBER() != null) {
+            value = Integer.parseInt(valueContext.NUMBER().getText());
+        }
+        // Si c'est une variable, il faut récupérer la valeur dans la mémoire
+        else {
+            assert valueContext.var() != null;
+            String memVar = valueContext.var().getText();
+            value = s.getMemory().get(memVar);
+        }
+        return value;
+    }
+
+    private static int handleOperation(ProbabilisticLanguageParser.ExprContext expr, State s, int value) {
+        int value2 = getValue(expr.operation().value(),s);
+        switch (expr.operation().op().getText()) {
+            case "+":
+                value += value2;
+                break;
+            case "-":
+                value -= value2;
+                break;
+            case "*":
+                value *= value2;
+                break;
+        }
+        return value;
+    }
+
     private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
 		Program p = c.getProgram();
 		//System.out.println("list commande" + p.getCommand(0).whileStatement().program().code().);
@@ -113,12 +152,27 @@ public final class DistributionTransformer {
 						
 					}
 				} catch (ScriptException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+                    e.printStackTrace();
 				}
 		}
 		return d1;
-	
     }
-    
+
+
+    private static Distribution applyIfRule(Configuration c, Distribution d1, Distribution d) {
+        // TODO a vous de jouer les mecs
+        return d1;
+    }
+
+    private static Distribution applySkipRule(Configuration c, Distribution d1, Distribution d) {
+        Program p = c.getProgram();
+        State s = c.getState();
+
+        // On crée le programme qu'on aura après le skip (le reste du programme)
+        Program p1 = new Program(p.getCommands().subList(1, p.getCommands().size()));
+
+        // TODO si on a déjà cette configuration additionner la probabilité
+        d1.getElements().put(new Configuration(p1,s), 1.0 * d.getElements().get(c));
+        return d1;
+    }
 }

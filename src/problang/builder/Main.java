@@ -33,8 +33,13 @@ public class Main {
 
             System.out.println(initialDistribution);
 
+            //TODO comment faire la boucle ?
             Distribution finalDistribution = DistributionTransformer.transformation(initialDistribution);
             System.out.println(finalDistribution);
+
+            finalDistribution = DistributionTransformer.transformation(finalDistribution);
+            System.out.println(finalDistribution);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
