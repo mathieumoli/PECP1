@@ -1,5 +1,14 @@
 package problang.builder;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+import antlr.ProbabilisticLanguageParser.CodeContext;
 import problang.elems.*;
 
 /**
@@ -20,6 +29,11 @@ public final class DistributionTransformer {
             if (p.getCommand(0).affectation() != null) {
                 d1 = applyAffectationRule(c, d1, d);
             }
+            else if(p.getCommand(0).whileStatement() != null){
+            	d1= applyWhileRule(c,d1,d);
+					
+            	}           	          
+            
             // TODO les autres regles
         }
         return d1;
@@ -33,6 +47,7 @@ public final class DistributionTransformer {
         Program p1 = new Program(p.getCommands().subList(1, p.getCommands().size()));
 
         String var = p.getCommand(0).affectation().var().IDENT().getText();
+        //System.out.println("var:"+var);
 
         // Premier cas : on affecte une expression
         if (p.getCommand(0).affectation().expr() != null) {
@@ -65,4 +80,45 @@ public final class DistributionTransformer {
         }
         return d1;
     }
+    
+    private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
+		Program p = c.getProgram();
+		//System.out.println("list commande" + p.getCommand(0).whileStatement().program().code().);
+		State etat = c.getState();
+		Map<String, Integer> memory = etat.getMemory();
+		if(memory.isEmpty()){
+			String var = p.getCommand(0).whileStatement().cond().getText().substring(0,1) ;
+			int valueVar = 3;
+			if(memory.containsKey(var)){
+				valueVar = memory.get(var);				
+			}
+			ScriptEngineManager manager = new ScriptEngineManager();
+			ScriptEngine engine = manager.getEngineByName("JavaScript");            		
+			String expr = p.getCommand(0).whileStatement().cond().getText().substring(1);
+			            		
+				try {
+					if((boolean) engine.eval(valueVar + expr)){
+						List<CodeContext> liste = p.getCommand(0).whileStatement().program().code();
+						liste.add(p.getCommand(0));
+						Program p1 = new Program(liste);
+						Configuration conf = new Configuration(p1, etat);
+						d1.getElements().put(conf, 1.0 * d.getElements().get(c));
+				       // String var = p.getCommand(0).affectation().var().IDENT().getText();
+					}else
+					{
+						Program pf = new Program(new ArrayList<CodeContext>());
+						Configuration conf = new Configuration(pf, etat);
+						d1.getElements().put(conf, 1.0 * d.getElements().get(c));
+						
+						
+					}
+				} catch (ScriptException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return d1;
+	
+    }
+    
 }
