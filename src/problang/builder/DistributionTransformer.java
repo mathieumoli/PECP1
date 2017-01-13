@@ -9,6 +9,9 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import antlr.ProbabilisticLanguageParser.CodeContext;
+import antlr.ProbabilisticLanguageParser.CompContext;
+import antlr.ProbabilisticLanguageParser.CondContext;
+import antlr.ProbabilisticLanguageParser.ExprContext;
 import problang.elems.*;
 
 /**
@@ -83,27 +86,29 @@ public final class DistributionTransformer {
     
     private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
 		Program p = c.getProgram();
-		//System.out.println("list commande" + p.getCommand(0).whileStatement().program().code().);
 		State etat = c.getState();
 		Map<String, Integer> memory = etat.getMemory();
 		if(memory.isEmpty()){
-			String var = p.getCommand(0).whileStatement().cond().getText().substring(0,1) ;
-			int valueVar = 3;
-			if(memory.containsKey(var)){
-				valueVar = memory.get(var);				
-			}
+			int value1 = 0;
+			int value2 = 0;
+			CondContext condition = p.getCommand(0).whileStatement().cond();
+			ExprContext expr1 = condition.expr(0);
+			ExprContext expr2 = condition.expr(1);
+
+			CompContext comp  = condition.comp();
+			value1 = evaluerExpr(expr1,c);
+			value2 = evaluerExpr(expr2,c);	
+			
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine engine = manager.getEngineByName("JavaScript");            		
-			String expr = p.getCommand(0).whileStatement().cond().getText().substring(1);
 			            		
 				try {
-					if((boolean) engine.eval(valueVar + expr)){
+					if((boolean) engine.eval(value1 + comp.getText() + value2)){
 						List<CodeContext> liste = p.getCommand(0).whileStatement().program().code();
 						liste.add(p.getCommand(0));
 						Program p1 = new Program(liste);
 						Configuration conf = new Configuration(p1, etat);
 						d1.getElements().put(conf, 1.0 * d.getElements().get(c));
-				       // String var = p.getCommand(0).affectation().var().IDENT().getText();
 					}else
 					{
 						Program pf = new Program(new ArrayList<CodeContext>());
@@ -119,6 +124,37 @@ public final class DistributionTransformer {
 		}
 		return d1;
 	
+    }
+    
+    private static int evaluerExpr(ExprContext expr, Configuration c)
+    {
+    	
+    	State etat = c.getState();
+		Map<String, Integer> memory = etat.getMemory();
+    	int value = 0;
+    	if(expr.NUMBER() != null)
+		{
+			value = Integer.parseInt(expr.NUMBER().getText());
+		}else{
+			String var1 = expr.var().getText();
+			if(memory.containsKey(var1)){
+				value = memory.get(var1);				
+			}
+		}
+		if(expr.op() != null){
+			String op = expr.op().getText();
+			int valueExpr = evaluerExpr(expr.expr(), c);
+			ScriptEngineManager mgr = new ScriptEngineManager();
+		    ScriptEngine engine = mgr.getEngineByName("JavaScript");
+		    try {
+				value = (int) engine.eval(value+op+valueExpr);
+			} catch (ScriptException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+    	return value;
     }
     
 }
