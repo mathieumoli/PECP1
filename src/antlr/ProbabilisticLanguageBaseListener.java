@@ -112,6 +112,30 @@ public class ProbabilisticLanguageBaseListener implements ProbabilisticLanguageL
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterValue(ProbabilisticLanguageParser.ValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValue(ProbabilisticLanguageParser.ValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperation(ProbabilisticLanguageParser.OperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperation(ProbabilisticLanguageParser.OperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOp(ProbabilisticLanguageParser.OpContext ctx) { }
 	/**
 	 * {@inheritDoc}
