@@ -10,18 +10,10 @@ import problang.elems.State;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-<<<<<<< HEAD
-
-import antlr.ProbabilisticLanguageParser.CodeContext;
-import antlr.ProbabilisticLanguageParser.CompContext;
-import antlr.ProbabilisticLanguageParser.CondContext;
-import antlr.ProbabilisticLanguageParser.ExprContext;
-import problang.elems.*;
-=======
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
->>>>>>> b144679e3d8937a0cb9e4c08a95e82cc0989c94c
+
 
 /**
  * Created by lorynf on 09/01/17.
@@ -136,13 +128,13 @@ public final class DistributionTransformer {
 		if(memory.isEmpty()){
 			int value1 = 0;
 			int value2 = 0;
-			CondContext condition = p.getCommand(0).whileStatement().cond();
-			ExprContext expr1 = condition.expr(0);
-			ExprContext expr2 = condition.expr(1);
+			ProbabilisticLanguageParser.CondContext condition = p.getCommand(0).whileStatement().cond();
+			ProbabilisticLanguageParser.ExprContext expr1 = condition.expr(0);
+			ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
 
-			CompContext comp  = condition.comp();
-			value1 = evaluerExpr(expr1,c);
-			value2 = evaluerExpr(expr2,c);	
+			ProbabilisticLanguageParser.CompContext comp  = condition.comp();
+			value1 = handleExpr(expr1, etat);
+			value2 = handleExpr(expr2,etat);
 			
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine engine = manager.getEngineByName("JavaScript");            		
@@ -168,41 +160,6 @@ public final class DistributionTransformer {
 		}
 		return d1;
     }
-<<<<<<< HEAD
-    
-    private static int evaluerExpr(ExprContext expr, Configuration c)
-    {
-    	
-    	State etat = c.getState();
-		Map<String, Integer> memory = etat.getMemory();
-    	int value = 0;
-    	if(expr.NUMBER() != null)
-		{
-			value = Integer.parseInt(expr.NUMBER().getText());
-		}else{
-			String var1 = expr.var().getText();
-			if(memory.containsKey(var1)){
-				value = memory.get(var1);				
-			}
-		}
-		if(expr.op() != null){
-			String op = expr.op().getText();
-			int valueExpr = evaluerExpr(expr.expr(), c);
-			ScriptEngineManager mgr = new ScriptEngineManager();
-		    ScriptEngine engine = mgr.getEngineByName("JavaScript");
-		    try {
-				value = (int) engine.eval(value+op+valueExpr);
-			} catch (ScriptException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-    	return value;
-    }
-    
-=======
-
 
     private static Distribution applyIfRule(Configuration c, Distribution d1, Distribution d) {
         // TODO a vous de jouer les mecs
@@ -220,5 +177,5 @@ public final class DistributionTransformer {
         d1.getElements().put(new Configuration(p1,s), 1.0 * d.getElements().get(c));
         return d1;
     }
->>>>>>> b144679e3d8937a0cb9e4c08a95e82cc0989c94c
 }
+
