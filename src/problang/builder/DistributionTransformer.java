@@ -10,6 +10,7 @@ import problang.elems.State;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -165,6 +166,30 @@ public final class DistributionTransformer {
     }
 
     private static Distribution applyIfRule(Configuration c, Distribution d1, Distribution d) {
+        Program program = c.getProgram();
+        State state = c.getState();
+
+        ProbabilisticLanguageParser.CondContext condition = program.getCommand(0).ifStatement().cond();
+        ProbabilisticLanguageParser.ExprContext expr1 = condition.expr(0);
+        ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
+
+        ProbabilisticLanguageParser.CompContext comp  = condition.comp();
+        int value1 = handleExpr(expr1, state);
+        int value2 = handleExpr(expr2, state);
+        List<ProbabilisticLanguageParser.CommandContext> listCodeExecute = new ArrayList<>();
+
+        try {
+            if ((boolean) engine.eval(value1 + comp.getText() + value2)) {
+                ProbabilisticLanguageParser.CommandContext codeTrue = program.getCommand(0).ifStatement().commands(0).command(0);
+
+            } else {
+
+            }
+            listCodeExecute.addAll(program.getCommands().subList(1, program.getCommands().size()));
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
+
         // TODO a vous de jouer les mecs
         return d1;
     }
