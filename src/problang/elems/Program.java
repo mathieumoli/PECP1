@@ -4,6 +4,7 @@ package problang.elems;
 import antlr.ProbabilisticLanguageParser;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by lorynf on 07/01/17.
@@ -38,5 +39,18 @@ public class Program {
             ret = "tic";
         }
         return ret;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (getClass() != o.getClass())
+            return false;
+        Program program = (Program) o;
+        // field comparison
+        return Objects.equals(commands, program.commands);
     }
 }

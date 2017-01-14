@@ -69,11 +69,10 @@ public final class DistributionTransformer {
         if (p.getCommand(0).affectation().expr() != null) {
             int value = handleExpr(p.getCommand(0).affectation().expr(), s);
 
-            // TODO verifier que var n'est pas déjà dedans
             s.getMemory().put(var, value);
 
             // TODO si on a déjà cette configuration additionner la probabilité
-            d1.getElements().put(new Configuration(p1, s), 1.0 * d.getElements().get(c));
+            d1.addElement(new Configuration(p1, s), 1.0 * d.getElements().get(c));
         }
         // Deuxième cas : on affecte une fonction probabiliste
         else {
