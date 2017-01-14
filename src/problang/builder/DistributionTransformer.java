@@ -21,6 +21,9 @@ import java.util.Map;
  */
 public final class DistributionTransformer {
 
+    private static ScriptEngineManager manager = new ScriptEngineManager();
+    private static ScriptEngine engine = manager.getEngineByName("JavaScript");
+
     public static Distribution transformation(Distribution d) {
         // La distribution finale à remplir
         Distribution d1 = new Distribution();
@@ -152,9 +155,6 @@ public final class DistributionTransformer {
             ProbabilisticLanguageParser.CompContext comp  = condition.comp();
             value1 = handleExpr(expr1, etat);
             value2 = handleExpr(expr2,etat);
-
-            ScriptEngineManager manager = new ScriptEngineManager();
-            ScriptEngine engine = manager.getEngineByName("JavaScript");
 
             try {
                 if((boolean) engine.eval(value1 + comp.getText() + value2)){
