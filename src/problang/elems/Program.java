@@ -10,21 +10,21 @@ import java.util.Objects;
  * Created by lorynf on 07/01/17.
  */
 public class Program {
-    private List<ProbabilisticLanguageParser.CodeContext> commands;
+    private List<ProbabilisticLanguageParser.CommandContext> commands;
 
     public Program(ProbabilisticLanguageParser.ProgramContext programContext) {
-        commands = programContext.code();
+        commands = programContext.commands().command();
     }
 
-    public Program(List<ProbabilisticLanguageParser.CodeContext> commandsList) {
+    public Program(List<ProbabilisticLanguageParser.CommandContext> commandsList) {
         commands = commandsList;
     }
 
-    public List<ProbabilisticLanguageParser.CodeContext> getCommands() {
+    public List<ProbabilisticLanguageParser.CommandContext> getCommands() {
         return commands;
     }
 
-    public ProbabilisticLanguageParser.CodeContext getCommand(int i) {
+    public ProbabilisticLanguageParser.CommandContext getCommand(int i) {
         return commands.get(i);
     }
 
@@ -32,7 +32,7 @@ public class Program {
     public String toString() {
         //encore des petits problemes
         String ret = "";
-        for (ProbabilisticLanguageParser.CodeContext command : commands) {
+        for (ProbabilisticLanguageParser.CommandContext command : commands) {
             ret += command.getText() + "; ";
         }
         if (ret.isEmpty()) {

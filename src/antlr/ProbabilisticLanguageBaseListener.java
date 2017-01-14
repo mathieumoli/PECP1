@@ -28,13 +28,25 @@ public class ProbabilisticLanguageBaseListener implements ProbabilisticLanguageL
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCode(ProbabilisticLanguageParser.CodeContext ctx) { }
+	@Override public void enterCommands(ProbabilisticLanguageParser.CommandsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCode(ProbabilisticLanguageParser.CodeContext ctx) { }
+	@Override public void exitCommands(ProbabilisticLanguageParser.CommandsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCommand(ProbabilisticLanguageParser.CommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCommand(ProbabilisticLanguageParser.CommandContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

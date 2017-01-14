@@ -22,14 +22,15 @@ ZQ : 'ZQ';
 IDENT : [a-zA-Z_][a-zA-Z_0-9]*;
 NUMBER : [\-]?[0-9]+;
 
-program: code (';' code)* EOF;
+program: commands EOF;
 
-code : affectation | skip | ifStatement | whileStatement;
+commands: command (';' command)*;
+command: affectation | skip | ifStatement | whileStatement;
 
 affectation: var ':=' (expr|probFunc);
 skip: 'skip';
-ifStatement: 'if' '(' cond ')' 'then' '{' code '}' 'else' '{' code '}';
-whileStatement: 'while' '(' cond ')' 'do' '{' program '}';
+ifStatement: 'if' '(' cond ')' 'then' '{' commands '}' 'else' '{' commands '}';
+whileStatement: 'while' '(' cond ')' 'do' '{' commands '}';
 
 var: IDENT;
 expr: value operation?; //TODO je voudrais bien gérer plusieurs opérations... plus tard
