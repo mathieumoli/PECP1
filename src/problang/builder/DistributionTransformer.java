@@ -180,12 +180,14 @@ public final class DistributionTransformer {
 
         try {
             if ((boolean) engine.eval(value1 + comp.getText() + value2)) {
-                ProbabilisticLanguageParser.CommandContext codeTrue = program.getCommand(0).ifStatement().commands(0).command(0);
+                listCodeExecute.addAll(program.getCommand(0).ifStatement().commands(0).command());
 
             } else {
-
+                listCodeExecute.addAll(program.getCommand(0).ifStatement().commands(1).command());
             }
             listCodeExecute.addAll(program.getCommands().subList(1, program.getCommands().size()));
+            Configuration newConfig = new Configuration(new Program(listCodeExecute), state);
+            d1.addElement(newConfig, 1.0*d.getElements().get(c));
         } catch (ScriptException e) {
             e.printStackTrace();
         }
