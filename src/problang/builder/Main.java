@@ -33,12 +33,18 @@ public class Main {
 
             System.out.println(initialDistribution);
 
-            //TODO comment faire la boucle ?
-            Distribution finalDistribution = DistributionTransformer.transformation(initialDistribution);
-            System.out.println(finalDistribution);
-
-            finalDistribution = DistributionTransformer.transformation(finalDistribution);
-            System.out.println(finalDistribution);
+            boolean goForward;
+            Distribution distribution = initialDistribution;
+            do {
+                distribution = DistributionTransformer.transformation(distribution);
+                System.out.println(distribution);
+                goForward = false;
+                for (Configuration c : distribution.getElements().keySet()) {
+                    if (!c.getProgram().getCommands().isEmpty()) {
+                        goForward = true;
+                    }
+                }
+            } while (goForward);
 
         } catch (IOException e) {
             e.printStackTrace();
