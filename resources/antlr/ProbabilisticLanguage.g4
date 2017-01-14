@@ -33,7 +33,7 @@ ifStatement: 'if' '(' cond ')' 'then' '{' commands '}' 'else' '{' commands '}';
 whileStatement: 'while' '(' cond ')' 'do' '{' commands '}';
 
 var: IDENT;
-expr: value operation?; //TODO je voudrais bien gérer plusieurs opérations... plus tard
+expr: value operation?; //TODO je voudrais bien gérer plusieurs opérations... plus tard (genre x:=y+3*x)
 value: (NUMBER | var);
 operation: op value;
 op: ADD | SUB | MULT;

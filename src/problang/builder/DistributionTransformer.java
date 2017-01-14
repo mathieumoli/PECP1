@@ -136,32 +136,30 @@ public final class DistributionTransformer {
     private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
         Program p = c.getProgram();
         State etat = c.getState();
-            ProbabilisticLanguageParser.CondContext condition = p.getCommand(0).whileStatement().cond();
-            ProbabilisticLanguageParser.ExprContext expr1 = condition.expr(0);
-            ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
+        ProbabilisticLanguageParser.CondContext condition = p.getCommand(0).whileStatement().cond();
+        ProbabilisticLanguageParser.ExprContext expr1 = condition.expr(0);
+        ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
 
-            ProbabilisticLanguageParser.CompContext comp  = condition.comp();
-            int value1 = handleExpr(expr1, etat);
-            int value2 = handleExpr(expr2,etat);
+        ProbabilisticLanguageParser.CompContext comp  = condition.comp();
+        int value1 = handleExpr(expr1, etat);
+        int value2 = handleExpr(expr2,etat);
 
-            try {
-                if((boolean) engine.eval(value1 + comp.getText() + value2)){
-                    List<ProbabilisticLanguageParser.CommandContext> liste = p.getCommand(0).whileStatement().commands().command();
-                    liste.addAll(p.getCommands());
-                    Program p1 = new Program(liste);
-                    Configuration conf = new Configuration(p1, etat);
-                    d1.addElement(conf, 1.0 * d.getElements().get(c));
-                }else
-                {
-                    Program pf = new Program(p.getCommands().subList(1, p.getCommands().size()));
-                    Configuration conf = new Configuration(pf, etat);
-                    d1.addElement(conf, 1.0 * d.getElements().get(c));
-
-
-                }
-            } catch (ScriptException e) {
-                e.printStackTrace();
+        try {
+            if((boolean) engine.eval(value1 + comp.getText() + value2)){
+                List<ProbabilisticLanguageParser.CommandContext> liste = p.getCommand(0).whileStatement().commands().command();
+                liste.addAll(p.getCommands());
+                Program p1 = new Program(liste);
+                Configuration conf = new Configuration(p1, etat);
+                d1.addElement(conf, 1.0 * d.getElements().get(c));
+            }else
+            {
+                Program pf = new Program(p.getCommands().subList(1, p.getCommands().size()));
+                Configuration conf = new Configuration(pf, etat);
+                d1.addElement(conf, 1.0 * d.getElements().get(c));
             }
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
         return d1;
     }
 
@@ -191,8 +189,6 @@ public final class DistributionTransformer {
         } catch (ScriptException e) {
             e.printStackTrace();
         }
-
-        // TODO a vous de jouer les mecs
         return d1;
     }
 
