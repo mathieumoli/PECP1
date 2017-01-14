@@ -126,17 +126,11 @@ public final class DistributionTransformer {
     }
 
     private static int handleOperation(ProbabilisticLanguageParser.ExprContext expr, State s, int value) {
-        int value2 = getValue(expr.operation().value(),s);
-        switch (expr.operation().op().getText()) {
-            case "+":
-                value += value2;
-                break;
-            case "-":
-                value -= value2;
-                break;
-            case "*":
-                value *= value2;
-                break;
+        try {
+            int value2 = getValue(expr.operation().value(),s);
+            return (int) engine.eval(value + expr.operation().op().getText() + value2 );
+        } catch (ScriptException e) {
+            e.printStackTrace();
         }
         return value;
     }
