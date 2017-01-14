@@ -13,6 +13,10 @@ public class State {
         memory = new HashMap<>();
     }
 
+    public State(State s) {
+        memory = new HashMap<>(s.getMemory());
+    }
+
     public Map<String, Integer> getMemory() {
         return memory;
     }
@@ -21,4 +25,5 @@ public class State {
     public String toString() {
         return memory.toString();
     }
+
 }

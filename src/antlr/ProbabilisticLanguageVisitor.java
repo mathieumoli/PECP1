@@ -94,4 +94,16 @@ public interface ProbabilisticLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProbFunc(ProbabilisticLanguageParser.ProbFuncContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProbabilisticLanguageParser#uniformDistrib}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUniformDistrib(ProbabilisticLanguageParser.UniformDistribContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProbabilisticLanguageParser#zq}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitZq(ProbabilisticLanguageParser.ZqContext ctx);
 }

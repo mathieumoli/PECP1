@@ -109,4 +109,18 @@ public class ProbabilisticLanguageBaseVisitor<T> extends AbstractParseTreeVisito
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitProbFunc(ProbabilisticLanguageParser.ProbFuncContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUniformDistrib(ProbabilisticLanguageParser.UniformDistribContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitZq(ProbabilisticLanguageParser.ZqContext ctx) { return visitChildren(ctx); }
 }

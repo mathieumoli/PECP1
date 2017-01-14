@@ -40,4 +40,6 @@ op: ADD | SUB | MULT;
 cond: expr comp expr; // je sais pas si vous préférez des value au lieu des expr ou 'var comp NUMBER'
 comp: EQ | NEQ | GT | GE | LT | LE;
 
-probFunc: ('{' NUMBER+ '}') | ZQ '(' NUMBER ')';
+probFunc: uniformDistrib | zq;
+uniformDistrib: '{' NUMBER (',' NUMBER)+ '}';
+zq: ZQ '(' NUMBER ')';

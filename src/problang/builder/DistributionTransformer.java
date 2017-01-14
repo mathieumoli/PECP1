@@ -2,6 +2,7 @@ package problang.builder;
 
 import antlr.ProbabilisticLanguageParser;
 import antlr.ProbabilisticLanguageParser.CodeContext;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import problang.elems.Configuration;
 import problang.elems.Distribution;
 import problang.elems.Program;
@@ -77,7 +78,25 @@ public final class DistributionTransformer {
         // Deuxième cas : on affecte une fonction probabiliste
         else {
             assert p.getCommand(0).affectation().probFunc() != null;
-            //TODO
+            ProbabilisticLanguageParser.ProbFuncContext probFunc = p.getCommand(0).affectation().probFunc();
+            if (probFunc.uniformDistrib() != null) {
+                double proba = (double)1/(probFunc.uniformDistrib().NUMBER().size());
+                for (TerminalNode number : probFunc.uniformDistrib().NUMBER()) {
+                    State s1 = new State(s);
+                    int value = Integer.parseInt(number.getText());
+                    s1.getMemory().put(var,value);
+                    d1.getElements().put(new Configuration(p1, s1), proba * d.getElements().get(c));
+                }
+            } else if (probFunc.zq() != null) {
+                int q = Integer.parseInt(probFunc.zq().NUMBER().getText());
+                for (int i = 0; i < q; i++) {
+                    State s1 = new State(s);
+                    s1.getMemory().put(var,i);
+                    d1.getElements().put(new Configuration(p1,s1), (1/q) * d.getElements().get(c));
+                }
+            } else {
+                //TODO les fonctions encryption
+            }
         }
         return d1;
     }
@@ -122,43 +141,43 @@ public final class DistributionTransformer {
     }
 
     private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
-		Program p = c.getProgram();
-		State etat = c.getState();
-		Map<String, Integer> memory = etat.getMemory();
-		if(memory.isEmpty()){
-			int value1 = 0;
-			int value2 = 0;
-			ProbabilisticLanguageParser.CondContext condition = p.getCommand(0).whileStatement().cond();
-			ProbabilisticLanguageParser.ExprContext expr1 = condition.expr(0);
-			ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
+        Program p = c.getProgram();
+        State etat = c.getState();
+        Map<String, Integer> memory = etat.getMemory();
+        if(memory.isEmpty()){
+            int value1 = 0;
+            int value2 = 0;
+            ProbabilisticLanguageParser.CondContext condition = p.getCommand(0).whileStatement().cond();
+            ProbabilisticLanguageParser.ExprContext expr1 = condition.expr(0);
+            ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
 
-			ProbabilisticLanguageParser.CompContext comp  = condition.comp();
-			value1 = handleExpr(expr1, etat);
-			value2 = handleExpr(expr2,etat);
-			
-			ScriptEngineManager manager = new ScriptEngineManager();
-			ScriptEngine engine = manager.getEngineByName("JavaScript");            		
-			            		
-				try {
-					if((boolean) engine.eval(value1 + comp.getText() + value2)){
-						List<CodeContext> liste = p.getCommand(0).whileStatement().program().code();
-						liste.add(p.getCommand(0));
-						Program p1 = new Program(liste);
-						Configuration conf = new Configuration(p1, etat);
-						d1.getElements().put(conf, 1.0 * d.getElements().get(c));
-					}else
-					{
-						Program pf = new Program(new ArrayList<CodeContext>());
-						Configuration conf = new Configuration(pf, etat);
-						d1.getElements().put(conf, 1.0 * d.getElements().get(c));
-						
-						
-					}
-				} catch (ScriptException e) {
-                    e.printStackTrace();
-				}
-		}
-		return d1;
+            ProbabilisticLanguageParser.CompContext comp  = condition.comp();
+            value1 = handleExpr(expr1, etat);
+            value2 = handleExpr(expr2,etat);
+
+            ScriptEngineManager manager = new ScriptEngineManager();
+            ScriptEngine engine = manager.getEngineByName("JavaScript");
+
+            try {
+                if((boolean) engine.eval(value1 + comp.getText() + value2)){
+                    List<CodeContext> liste = p.getCommand(0).whileStatement().program().code();
+                    liste.add(p.getCommand(0));
+                    Program p1 = new Program(liste);
+                    Configuration conf = new Configuration(p1, etat);
+                    d1.getElements().put(conf, 1.0 * d.getElements().get(c));
+                }else
+                {
+                    Program pf = new Program(new ArrayList<CodeContext>());
+                    Configuration conf = new Configuration(pf, etat);
+                    d1.getElements().put(conf, 1.0 * d.getElements().get(c));
+
+
+                }
+            } catch (ScriptException e) {
+                e.printStackTrace();
+            }
+        }
+        return d1;
     }
 
     private static Distribution applyIfRule(Configuration c, Distribution d1, Distribution d) {
