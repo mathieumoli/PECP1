@@ -32,7 +32,7 @@ public final class DistributionTransformer {
 
             // si le programme est vide (tic)
             if (p.getCommands().isEmpty()) {
-                d1.getElements().put(c, d.getElements().get(c));
+                d1.addElement(c, d.getElements().get(c));
             } else {
                 // Si la première commande est une affectation
                 if (p.getCommand(0).affectation() != null) {
@@ -71,7 +71,6 @@ public final class DistributionTransformer {
 
             s.getMemory().put(var, value);
 
-            // TODO si on a déjà cette configuration additionner la probabilité
             d1.addElement(new Configuration(p1, s), 1.0 * d.getElements().get(c));
         }
         // Deuxième cas : on affecte une fonction probabiliste
@@ -84,14 +83,14 @@ public final class DistributionTransformer {
                     State s1 = new State(s);
                     int value = Integer.parseInt(number.getText());
                     s1.getMemory().put(var,value);
-                    d1.getElements().put(new Configuration(p1, s1), proba * d.getElements().get(c));
+                    d1.addElement(new Configuration(p1, s1), proba * d.getElements().get(c));
                 }
             } else if (probFunc.zq() != null) {
                 int q = Integer.parseInt(probFunc.zq().NUMBER().getText());
                 for (int i = 0; i < q; i++) {
                     State s1 = new State(s);
                     s1.getMemory().put(var,i);
-                    d1.getElements().put(new Configuration(p1,s1), (1/q) * d.getElements().get(c));
+                    d1.addElement(new Configuration(p1,s1), (1/q) * d.getElements().get(c));
                 }
             } else {
                 //TODO les fonctions encryption
@@ -163,12 +162,12 @@ public final class DistributionTransformer {
                     liste.add(p.getCommand(0));
                     Program p1 = new Program(liste);
                     Configuration conf = new Configuration(p1, etat);
-                    d1.getElements().put(conf, 1.0 * d.getElements().get(c));
+                    d1.addElement(conf, 1.0 * d.getElements().get(c));
                 }else
                 {
                     Program pf = new Program(new ArrayList<CodeContext>());
                     Configuration conf = new Configuration(pf, etat);
-                    d1.getElements().put(conf, 1.0 * d.getElements().get(c));
+                    d1.addElement(conf, 1.0 * d.getElements().get(c));
 
 
                 }
@@ -191,8 +190,7 @@ public final class DistributionTransformer {
         // On crée le programme qu'on aura après le skip (le reste du programme)
         Program p1 = new Program(p.getCommands().subList(1, p.getCommands().size()));
 
-        // TODO si on a déjà cette configuration additionner la probabilité
-        d1.getElements().put(new Configuration(p1,s), 1.0 * d.getElements().get(c));
+        d1.addElement(new Configuration(p1,s), 1.0 * d.getElements().get(c));
         return d1;
     }
 }
