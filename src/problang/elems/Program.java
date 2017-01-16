@@ -12,10 +12,6 @@ import java.util.Objects;
 public class Program {
     private List<ProbabilisticLanguageParser.CommandContext> commands;
 
-    public Program(ProbabilisticLanguageParser.ProgramContext programContext) {
-        commands = programContext.commands().command();
-    }
-
     public Program(List<ProbabilisticLanguageParser.CommandContext> commandsList) {
         commands = commandsList;
     }
@@ -30,7 +26,6 @@ public class Program {
 
     @Override
     public String toString() {
-        //encore des petits problemes
         String ret = "";
         for (ProbabilisticLanguageParser.CommandContext command : commands) {
             ret += command.getText() + "; ";

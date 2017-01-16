@@ -24,6 +24,27 @@ public class ProbabilisticLanguageBaseVisitor<T> extends AbstractParseTreeVisito
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitInitialState(ProbabilisticLanguageParser.InitialStateContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitMemory(ProbabilisticLanguageParser.MemoryContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitElement(ProbabilisticLanguageParser.ElementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitCommands(ProbabilisticLanguageParser.CommandsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

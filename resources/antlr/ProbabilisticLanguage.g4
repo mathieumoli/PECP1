@@ -22,7 +22,11 @@ ZQ : 'ZQ';
 IDENT : [a-zA-Z_][a-zA-Z_0-9]*;
 NUMBER : [\-]?[0-9]+;
 
-program: commands EOF;
+program: initialState commands EOF;
+
+initialState: 'initial_state' ':' '[' memory ']';
+memory: element (',' element)*;
+element: var ':' NUMBER;
 
 commands: command (';' command)*;
 command: affectation | skip | ifStatement | whileStatement;

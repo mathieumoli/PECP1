@@ -24,9 +24,13 @@ public class Main {
             ProbabilisticLanguageLexer lexer = new ProbabilisticLanguageLexer(in);
             BufferedTokenStream tokens = new CommonTokenStream(lexer);
             ProbabilisticLanguageParser parser = new ProbabilisticLanguageParser(tokens);
+            ProbabilisticLanguageParser.ProgramContext programContext = parser.program();
 
-            Program initialProgram = new Program(parser.program());
-            State initialState = new State(); //TODO Il va falloir le faire mieux que ça haha
+            State initialState = new State();
+            for (ProbabilisticLanguageParser.ElementContext element :programContext.initialState().memory().element()) {
+                initialState.addElement(element.var().IDENT().getText(),Integer.parseInt(element.NUMBER().getText()));
+            }
+            Program initialProgram = new Program(programContext.commands().command());
             Configuration initialConfiguration = new Configuration(initialProgram, initialState);
             Distribution initialDistribution = new Distribution();
             initialDistribution.getElements().put(initialConfiguration,1.0);

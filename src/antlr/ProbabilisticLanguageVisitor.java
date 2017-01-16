@@ -17,6 +17,24 @@ public interface ProbabilisticLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(ProbabilisticLanguageParser.ProgramContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProbabilisticLanguageParser#initialState}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInitialState(ProbabilisticLanguageParser.InitialStateContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProbabilisticLanguageParser#memory}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMemory(ProbabilisticLanguageParser.MemoryContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProbabilisticLanguageParser#element}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElement(ProbabilisticLanguageParser.ElementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProbabilisticLanguageParser#commands}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

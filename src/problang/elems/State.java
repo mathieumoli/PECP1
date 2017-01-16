@@ -22,6 +22,10 @@ public class State {
         return memory;
     }
 
+    public void addElement(String name, int value) {
+        memory.put(name,value);
+    }
+
     @Override
     public String toString() {
         return memory.toString();

@@ -28,6 +28,42 @@ public class ProbabilisticLanguageBaseListener implements ProbabilisticLanguageL
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterInitialState(ProbabilisticLanguageParser.InitialStateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInitialState(ProbabilisticLanguageParser.InitialStateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMemory(ProbabilisticLanguageParser.MemoryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMemory(ProbabilisticLanguageParser.MemoryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterElement(ProbabilisticLanguageParser.ElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElement(ProbabilisticLanguageParser.ElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCommands(ProbabilisticLanguageParser.CommandsContext ctx) { }
 	/**
 	 * {@inheritDoc}
