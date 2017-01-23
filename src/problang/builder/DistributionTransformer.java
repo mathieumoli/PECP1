@@ -79,7 +79,7 @@ public final class DistributionTransformer {
             assert p.getCommand(0).affectation().probFunc() != null;
             ProbabilisticLanguageParser.ProbFuncContext probFunc = p.getCommand(0).affectation().probFunc();
             if (probFunc.uniformDistrib() != null) {
-                double proba = (double)1/(probFunc.uniformDistrib().NUMBER().size());
+                double proba = 1.0/(probFunc.uniformDistrib().NUMBER().size());
                 for (TerminalNode number : probFunc.uniformDistrib().NUMBER()) {
                     State s1 = new State(s);
                     int value = Integer.parseInt(number.getText());
@@ -91,7 +91,7 @@ public final class DistributionTransformer {
                 for (int i = 0; i < q; i++) {
                     State s1 = new State(s);
                     s1.getMemory().put(var,i);
-                    d1.addElement(new Configuration(p1,s1), (1/q) * d.getElements().get(c));
+                    d1.addElement(new Configuration(p1,s1), (1.0/q) * d.getElements().get(c));
                 }
             } else {
                 //TODO les fonctions encryption
