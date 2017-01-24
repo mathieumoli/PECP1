@@ -26,12 +26,13 @@ public class ProbabilisticLanguageParser extends Parser {
 		RULE_commands = 4, RULE_command = 5, RULE_affectation = 6, RULE_skip = 7, 
 		RULE_ifStatement = 8, RULE_whileStatement = 9, RULE_var = 10, RULE_expr = 11, 
 		RULE_value = 12, RULE_operation = 13, RULE_op = 14, RULE_mod = 15, RULE_cond = 16, 
-		RULE_comp = 17, RULE_probFunc = 18, RULE_uniformDistrib = 19, RULE_zq = 20;
+		RULE_comp = 17, RULE_probFunc = 18, RULE_uniformDistrib = 19, RULE_zq = 20, 
+		RULE_functions = 21;
 	public static final String[] ruleNames = {
 		"program", "initialState", "memory", "element", "commands", "command", 
 		"affectation", "skip", "ifStatement", "whileStatement", "var", "expr", 
 		"value", "operation", "op", "mod", "cond", "comp", "probFunc", "uniformDistrib", 
-		"zq"
+		"zq", "functions"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -101,6 +102,9 @@ public class ProbabilisticLanguageParser extends Parser {
 		public CommandsContext commands() {
 			return getRuleContext(CommandsContext.class,0);
 		}
+		public FunctionsContext functions() {
+			return getRuleContext(FunctionsContext.class,0);
+		}
 		public TerminalNode EOF() { return getToken(ProbabilisticLanguageParser.EOF, 0); }
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -114,11 +118,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitProgram(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitProgram(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ProgramContext program() throws RecognitionException {
@@ -127,11 +126,13 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(42);
-			initialState();
-			setState(43);
-			commands();
 			setState(44);
+			initialState();
+			setState(45);
+			commands();
+			setState(46);
+			functions();
+			setState(47);
 			match(EOF);
 			}
 		}
@@ -162,11 +163,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitInitialState(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitInitialState(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final InitialStateContext initialState() throws RecognitionException {
@@ -175,15 +171,15 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(46);
-			match(T__0);
-			setState(47);
-			match(T__1);
-			setState(48);
-			match(T__2);
 			setState(49);
-			memory();
+			match(T__0);
 			setState(50);
+			match(T__1);
+			setState(51);
+			match(T__2);
+			setState(52);
+			memory();
+			setState(53);
 			match(T__3);
 			}
 		}
@@ -217,11 +213,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitMemory(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitMemory(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MemoryContext memory() throws RecognitionException {
@@ -231,21 +222,21 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(52);
+			setState(55);
 			element();
-			setState(57);
+			setState(60);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__4) {
 				{
 				{
-				setState(53);
+				setState(56);
 				match(T__4);
-				setState(54);
+				setState(57);
 				element();
 				}
 				}
-				setState(59);
+				setState(62);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -279,11 +270,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitElement(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitElement(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ElementContext element() throws RecognitionException {
@@ -292,11 +278,11 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(60);
+			setState(63);
 			var();
-			setState(61);
+			setState(64);
 			match(T__1);
-			setState(62);
+			setState(65);
 			match(NUMBER);
 			}
 		}
@@ -330,11 +316,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitCommands(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitCommands(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final CommandsContext commands() throws RecognitionException {
@@ -344,21 +325,21 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(64);
+			setState(67);
 			command();
-			setState(69);
+			setState(72);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__5) {
 				{
 				{
-				setState(65);
+				setState(68);
 				match(T__5);
-				setState(66);
+				setState(69);
 				command();
 				}
 				}
-				setState(71);
+				setState(74);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -400,44 +381,39 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitCommand(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitCommand(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final CommandContext command() throws RecognitionException {
 		CommandContext _localctx = new CommandContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_command);
 		try {
-			setState(76);
+			setState(79);
 			switch (_input.LA(1)) {
 			case IDENT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(72);
+				setState(75);
 				affectation();
 				}
 				break;
 			case T__7:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(73);
+				setState(76);
 				skip();
 				}
 				break;
 			case T__8:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(74);
+				setState(77);
 				ifStatement();
 				}
 				break;
 			case T__15:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(75);
+				setState(78);
 				whileStatement();
 				}
 				break;
@@ -478,11 +454,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitAffectation(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitAffectation(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final AffectationContext affectation() throws RecognitionException {
@@ -491,23 +462,23 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(78);
+			setState(81);
 			var();
-			setState(79);
-			match(T__6);
 			setState(82);
+			match(T__6);
+			setState(85);
 			switch (_input.LA(1)) {
 			case IDENT:
 			case NUMBER:
 				{
-				setState(80);
+				setState(83);
 				expr();
 				}
 				break;
 			case T__12:
 			case ZQ:
 				{
-				setState(81);
+				setState(84);
 				probFunc();
 				}
 				break;
@@ -540,11 +511,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitSkip(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitSkip(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SkipContext skip() throws RecognitionException {
@@ -553,7 +519,7 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(84);
+			setState(87);
 			match(T__7);
 			}
 		}
@@ -590,11 +556,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitIfStatement(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitIfStatement(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final IfStatementContext ifStatement() throws RecognitionException {
@@ -603,29 +564,29 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(86);
-			match(T__8);
-			setState(87);
-			match(T__9);
-			setState(88);
-			cond();
 			setState(89);
-			match(T__10);
+			match(T__8);
 			setState(90);
-			match(T__11);
+			match(T__9);
 			setState(91);
-			match(T__12);
+			cond();
 			setState(92);
-			commands();
+			match(T__10);
 			setState(93);
-			match(T__13);
+			match(T__11);
 			setState(94);
-			match(T__14);
-			setState(95);
 			match(T__12);
-			setState(96);
+			setState(95);
 			commands();
+			setState(96);
+			match(T__13);
 			setState(97);
+			match(T__14);
+			setState(98);
+			match(T__12);
+			setState(99);
+			commands();
+			setState(100);
 			match(T__13);
 			}
 		}
@@ -659,11 +620,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitWhileStatement(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitWhileStatement(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final WhileStatementContext whileStatement() throws RecognitionException {
@@ -672,21 +628,21 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(99);
-			match(T__15);
-			setState(100);
-			match(T__9);
-			setState(101);
-			cond();
 			setState(102);
-			match(T__10);
+			match(T__15);
 			setState(103);
-			match(T__16);
+			match(T__9);
 			setState(104);
-			match(T__12);
+			cond();
 			setState(105);
-			commands();
+			match(T__10);
 			setState(106);
+			match(T__16);
+			setState(107);
+			match(T__12);
+			setState(108);
+			commands();
+			setState(109);
 			match(T__13);
 			}
 		}
@@ -715,11 +671,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitVar(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitVar(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final VarContext var() throws RecognitionException {
@@ -728,7 +679,7 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(108);
+			setState(111);
 			match(IDENT);
 			}
 		}
@@ -762,11 +713,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitExpr(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitExpr(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ExprContext expr() throws RecognitionException {
@@ -776,13 +722,13 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(110);
+			setState(113);
 			value();
-			setState(112);
+			setState(115);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ADD) | (1L << SUB) | (1L << MULT) | (1L << DIV) | (1L << POW))) != 0)) {
 				{
-				setState(111);
+				setState(114);
 				operation();
 				}
 			}
@@ -817,11 +763,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitValue(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitValue(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ValueContext value() throws RecognitionException {
@@ -830,17 +771,17 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(116);
+			setState(119);
 			switch (_input.LA(1)) {
 			case NUMBER:
 				{
-				setState(114);
+				setState(117);
 				match(NUMBER);
 				}
 				break;
 			case IDENT:
 				{
-				setState(115);
+				setState(118);
 				var();
 				}
 				break;
@@ -882,11 +823,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitOperation(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitOperation(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final OperationContext operation() throws RecognitionException {
@@ -896,15 +832,15 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(118);
-			op();
-			setState(119);
-			value();
 			setState(121);
+			op();
+			setState(122);
+			value();
+			setState(124);
 			_la = _input.LA(1);
 			if (_la==T__2) {
 				{
-				setState(120);
+				setState(123);
 				mod();
 				}
 			}
@@ -940,11 +876,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitOp(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitOp(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final OpContext op() throws RecognitionException {
@@ -954,7 +885,7 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(123);
+			setState(126);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ADD) | (1L << SUB) | (1L << MULT) | (1L << DIV) | (1L << POW))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -990,11 +921,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitMod(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitMod(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ModContext mod() throws RecognitionException {
@@ -1003,11 +929,11 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(125);
+			setState(128);
 			match(T__2);
-			setState(126);
+			setState(129);
 			value();
-			setState(127);
+			setState(130);
 			match(T__3);
 			}
 		}
@@ -1044,11 +970,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitCond(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitCond(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final CondContext cond() throws RecognitionException {
@@ -1057,11 +978,11 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(129);
+			setState(132);
 			expr();
-			setState(130);
+			setState(133);
 			comp();
-			setState(131);
+			setState(134);
 			expr();
 			}
 		}
@@ -1095,11 +1016,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitComp(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitComp(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final CompContext comp() throws RecognitionException {
@@ -1109,7 +1025,7 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(133);
+			setState(136);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << EQ) | (1L << NEQ) | (1L << GT) | (1L << GE) | (1L << LT) | (1L << LE))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1148,30 +1064,25 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitProbFunc(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitProbFunc(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ProbFuncContext probFunc() throws RecognitionException {
 		ProbFuncContext _localctx = new ProbFuncContext(_ctx, getState());
 		enterRule(_localctx, 36, RULE_probFunc);
 		try {
-			setState(137);
+			setState(140);
 			switch (_input.LA(1)) {
 			case T__12:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(135);
+				setState(138);
 				uniformDistrib();
 				}
 				break;
 			case ZQ:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(136);
+				setState(139);
 				zq();
 				}
 				break;
@@ -1207,11 +1118,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitUniformDistrib(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitUniformDistrib(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final UniformDistribContext uniformDistrib() throws RecognitionException {
@@ -1221,27 +1127,27 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(139);
+			setState(142);
 			match(T__12);
-			setState(140);
+			setState(143);
 			match(NUMBER);
-			setState(143); 
+			setState(146); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(141);
+				setState(144);
 				match(T__4);
-				setState(142);
+				setState(145);
 				match(NUMBER);
 				}
 				}
-				setState(145); 
+				setState(148); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==T__4 );
-			setState(147);
+			setState(150);
 			match(T__13);
 			}
 		}
@@ -1271,11 +1177,6 @@ public class ProbabilisticLanguageParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitZq(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProbabilisticLanguageVisitor ) return ((ProbabilisticLanguageVisitor<? extends T>)visitor).visitZq(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ZqContext zq() throws RecognitionException {
@@ -1284,13 +1185,13 @@ public class ProbabilisticLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(149);
-			match(ZQ);
-			setState(150);
-			match(T__9);
-			setState(151);
-			match(NUMBER);
 			setState(152);
+			match(ZQ);
+			setState(153);
+			match(T__9);
+			setState(154);
+			match(NUMBER);
+			setState(155);
 			match(T__10);
 			}
 		}
@@ -1305,47 +1206,134 @@ public class ProbabilisticLanguageParser extends Parser {
 		return _localctx;
 	}
 
+	public static class FunctionsContext extends ParserRuleContext {
+		public TerminalNode IDENT() { return getToken(ProbabilisticLanguageParser.IDENT, 0); }
+		public CommandsContext commands() {
+			return getRuleContext(CommandsContext.class,0);
+		}
+		public List<VarContext> var() {
+			return getRuleContexts(VarContext.class);
+		}
+		public VarContext var(int i) {
+			return getRuleContext(VarContext.class,i);
+		}
+		public FunctionsContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_functions; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).enterFunctions(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ProbabilisticLanguageListener ) ((ProbabilisticLanguageListener)listener).exitFunctions(this);
+		}
+	}
+
+	public final FunctionsContext functions() throws RecognitionException {
+		FunctionsContext _localctx = new FunctionsContext(_ctx, getState());
+		enterRule(_localctx, 42, RULE_functions);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(157);
+			match(IDENT);
+			setState(158);
+			match(T__9);
+			setState(167);
+			_la = _input.LA(1);
+			if (_la==IDENT) {
+				{
+				setState(159);
+				var();
+				setState(164);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				while (_la==T__4) {
+					{
+					{
+					setState(160);
+					match(T__4);
+					setState(161);
+					var();
+					}
+					}
+					setState(166);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+				}
+				}
+			}
+
+			setState(169);
+			match(T__10);
+			setState(170);
+			match(EQ);
+			setState(171);
+			commands();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\"\u009d\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\"\u00b0\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\3\2\3\2\3\2\3\2\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\4\3\4\3\4\7\4:\n\4\f\4\16\4=\13\4\3\5\3\5\3\5\3\5\3\6\3\6"+
-		"\3\6\7\6F\n\6\f\6\16\6I\13\6\3\7\3\7\3\7\3\7\5\7O\n\7\3\b\3\b\3\b\3\b"+
-		"\5\bU\n\b\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n"+
-		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\r\3\r\5\rs\n\r"+
-		"\3\16\3\16\5\16w\n\16\3\17\3\17\3\17\5\17|\n\17\3\20\3\20\3\21\3\21\3"+
-		"\21\3\21\3\22\3\22\3\22\3\22\3\23\3\23\3\24\3\24\5\24\u008c\n\24\3\25"+
-		"\3\25\3\25\3\25\6\25\u0092\n\25\r\25\16\25\u0093\3\25\3\25\3\26\3\26\3"+
-		"\26\3\26\3\26\3\26\2\2\27\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&"+
-		"(*\2\4\3\2\25\31\3\2\32\37\u0092\2,\3\2\2\2\4\60\3\2\2\2\6\66\3\2\2\2"+
-		"\b>\3\2\2\2\nB\3\2\2\2\fN\3\2\2\2\16P\3\2\2\2\20V\3\2\2\2\22X\3\2\2\2"+
-		"\24e\3\2\2\2\26n\3\2\2\2\30p\3\2\2\2\32v\3\2\2\2\34x\3\2\2\2\36}\3\2\2"+
-		"\2 \177\3\2\2\2\"\u0083\3\2\2\2$\u0087\3\2\2\2&\u008b\3\2\2\2(\u008d\3"+
-		"\2\2\2*\u0097\3\2\2\2,-\5\4\3\2-.\5\n\6\2./\7\2\2\3/\3\3\2\2\2\60\61\7"+
-		"\3\2\2\61\62\7\4\2\2\62\63\7\5\2\2\63\64\5\6\4\2\64\65\7\6\2\2\65\5\3"+
-		"\2\2\2\66;\5\b\5\2\678\7\7\2\28:\5\b\5\29\67\3\2\2\2:=\3\2\2\2;9\3\2\2"+
-		"\2;<\3\2\2\2<\7\3\2\2\2=;\3\2\2\2>?\5\26\f\2?@\7\4\2\2@A\7\"\2\2A\t\3"+
-		"\2\2\2BG\5\f\7\2CD\7\b\2\2DF\5\f\7\2EC\3\2\2\2FI\3\2\2\2GE\3\2\2\2GH\3"+
-		"\2\2\2H\13\3\2\2\2IG\3\2\2\2JO\5\16\b\2KO\5\20\t\2LO\5\22\n\2MO\5\24\13"+
-		"\2NJ\3\2\2\2NK\3\2\2\2NL\3\2\2\2NM\3\2\2\2O\r\3\2\2\2PQ\5\26\f\2QT\7\t"+
-		"\2\2RU\5\30\r\2SU\5&\24\2TR\3\2\2\2TS\3\2\2\2U\17\3\2\2\2VW\7\n\2\2W\21"+
-		"\3\2\2\2XY\7\13\2\2YZ\7\f\2\2Z[\5\"\22\2[\\\7\r\2\2\\]\7\16\2\2]^\7\17"+
-		"\2\2^_\5\n\6\2_`\7\20\2\2`a\7\21\2\2ab\7\17\2\2bc\5\n\6\2cd\7\20\2\2d"+
-		"\23\3\2\2\2ef\7\22\2\2fg\7\f\2\2gh\5\"\22\2hi\7\r\2\2ij\7\23\2\2jk\7\17"+
-		"\2\2kl\5\n\6\2lm\7\20\2\2m\25\3\2\2\2no\7!\2\2o\27\3\2\2\2pr\5\32\16\2"+
-		"qs\5\34\17\2rq\3\2\2\2rs\3\2\2\2s\31\3\2\2\2tw\7\"\2\2uw\5\26\f\2vt\3"+
-		"\2\2\2vu\3\2\2\2w\33\3\2\2\2xy\5\36\20\2y{\5\32\16\2z|\5 \21\2{z\3\2\2"+
-		"\2{|\3\2\2\2|\35\3\2\2\2}~\t\2\2\2~\37\3\2\2\2\177\u0080\7\5\2\2\u0080"+
-		"\u0081\5\32\16\2\u0081\u0082\7\6\2\2\u0082!\3\2\2\2\u0083\u0084\5\30\r"+
-		"\2\u0084\u0085\5$\23\2\u0085\u0086\5\30\r\2\u0086#\3\2\2\2\u0087\u0088"+
-		"\t\3\2\2\u0088%\3\2\2\2\u0089\u008c\5(\25\2\u008a\u008c\5*\26\2\u008b"+
-		"\u0089\3\2\2\2\u008b\u008a\3\2\2\2\u008c\'\3\2\2\2\u008d\u008e\7\17\2"+
-		"\2\u008e\u0091\7\"\2\2\u008f\u0090\7\7\2\2\u0090\u0092\7\"\2\2\u0091\u008f"+
-		"\3\2\2\2\u0092\u0093\3\2\2\2\u0093\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094"+
-		"\u0095\3\2\2\2\u0095\u0096\7\20\2\2\u0096)\3\2\2\2\u0097\u0098\7 \2\2"+
-		"\u0098\u0099\7\f\2\2\u0099\u009a\7\"\2\2\u009a\u009b\7\r\2\2\u009b+\3"+
-		"\2\2\2\13;GNTrv{\u008b\u0093";
+		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\3\2\3\2\3\2\3\2\3\2"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\7\4=\n\4\f\4\16\4@\13\4\3\5\3\5\3"+
+		"\5\3\5\3\6\3\6\3\6\7\6I\n\6\f\6\16\6L\13\6\3\7\3\7\3\7\3\7\5\7R\n\7\3"+
+		"\b\3\b\3\b\3\b\5\bX\n\b\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3"+
+		"\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3"+
+		"\r\3\r\5\rv\n\r\3\16\3\16\5\16z\n\16\3\17\3\17\3\17\5\17\177\n\17\3\20"+
+		"\3\20\3\21\3\21\3\21\3\21\3\22\3\22\3\22\3\22\3\23\3\23\3\24\3\24\5\24"+
+		"\u008f\n\24\3\25\3\25\3\25\3\25\6\25\u0095\n\25\r\25\16\25\u0096\3\25"+
+		"\3\25\3\26\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\27\3\27\7\27\u00a5\n\27"+
+		"\f\27\16\27\u00a8\13\27\5\27\u00aa\n\27\3\27\3\27\3\27\3\27\3\27\2\2\30"+
+		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,\2\4\3\2\25\31\3\2\32\37"+
+		"\u00a6\2.\3\2\2\2\4\63\3\2\2\2\69\3\2\2\2\bA\3\2\2\2\nE\3\2\2\2\fQ\3\2"+
+		"\2\2\16S\3\2\2\2\20Y\3\2\2\2\22[\3\2\2\2\24h\3\2\2\2\26q\3\2\2\2\30s\3"+
+		"\2\2\2\32y\3\2\2\2\34{\3\2\2\2\36\u0080\3\2\2\2 \u0082\3\2\2\2\"\u0086"+
+		"\3\2\2\2$\u008a\3\2\2\2&\u008e\3\2\2\2(\u0090\3\2\2\2*\u009a\3\2\2\2,"+
+		"\u009f\3\2\2\2./\5\4\3\2/\60\5\n\6\2\60\61\5,\27\2\61\62\7\2\2\3\62\3"+
+		"\3\2\2\2\63\64\7\3\2\2\64\65\7\4\2\2\65\66\7\5\2\2\66\67\5\6\4\2\678\7"+
+		"\6\2\28\5\3\2\2\29>\5\b\5\2:;\7\7\2\2;=\5\b\5\2<:\3\2\2\2=@\3\2\2\2><"+
+		"\3\2\2\2>?\3\2\2\2?\7\3\2\2\2@>\3\2\2\2AB\5\26\f\2BC\7\4\2\2CD\7\"\2\2"+
+		"D\t\3\2\2\2EJ\5\f\7\2FG\7\b\2\2GI\5\f\7\2HF\3\2\2\2IL\3\2\2\2JH\3\2\2"+
+		"\2JK\3\2\2\2K\13\3\2\2\2LJ\3\2\2\2MR\5\16\b\2NR\5\20\t\2OR\5\22\n\2PR"+
+		"\5\24\13\2QM\3\2\2\2QN\3\2\2\2QO\3\2\2\2QP\3\2\2\2R\r\3\2\2\2ST\5\26\f"+
+		"\2TW\7\t\2\2UX\5\30\r\2VX\5&\24\2WU\3\2\2\2WV\3\2\2\2X\17\3\2\2\2YZ\7"+
+		"\n\2\2Z\21\3\2\2\2[\\\7\13\2\2\\]\7\f\2\2]^\5\"\22\2^_\7\r\2\2_`\7\16"+
+		"\2\2`a\7\17\2\2ab\5\n\6\2bc\7\20\2\2cd\7\21\2\2de\7\17\2\2ef\5\n\6\2f"+
+		"g\7\20\2\2g\23\3\2\2\2hi\7\22\2\2ij\7\f\2\2jk\5\"\22\2kl\7\r\2\2lm\7\23"+
+		"\2\2mn\7\17\2\2no\5\n\6\2op\7\20\2\2p\25\3\2\2\2qr\7!\2\2r\27\3\2\2\2"+
+		"su\5\32\16\2tv\5\34\17\2ut\3\2\2\2uv\3\2\2\2v\31\3\2\2\2wz\7\"\2\2xz\5"+
+		"\26\f\2yw\3\2\2\2yx\3\2\2\2z\33\3\2\2\2{|\5\36\20\2|~\5\32\16\2}\177\5"+
+		" \21\2~}\3\2\2\2~\177\3\2\2\2\177\35\3\2\2\2\u0080\u0081\t\2\2\2\u0081"+
+		"\37\3\2\2\2\u0082\u0083\7\5\2\2\u0083\u0084\5\32\16\2\u0084\u0085\7\6"+
+		"\2\2\u0085!\3\2\2\2\u0086\u0087\5\30\r\2\u0087\u0088\5$\23\2\u0088\u0089"+
+		"\5\30\r\2\u0089#\3\2\2\2\u008a\u008b\t\3\2\2\u008b%\3\2\2\2\u008c\u008f"+
+		"\5(\25\2\u008d\u008f\5*\26\2\u008e\u008c\3\2\2\2\u008e\u008d\3\2\2\2\u008f"+
+		"\'\3\2\2\2\u0090\u0091\7\17\2\2\u0091\u0094\7\"\2\2\u0092\u0093\7\7\2"+
+		"\2\u0093\u0095\7\"\2\2\u0094\u0092\3\2\2\2\u0095\u0096\3\2\2\2\u0096\u0094"+
+		"\3\2\2\2\u0096\u0097\3\2\2\2\u0097\u0098\3\2\2\2\u0098\u0099\7\20\2\2"+
+		"\u0099)\3\2\2\2\u009a\u009b\7 \2\2\u009b\u009c\7\f\2\2\u009c\u009d\7\""+
+		"\2\2\u009d\u009e\7\r\2\2\u009e+\3\2\2\2\u009f\u00a0\7!\2\2\u00a0\u00a9"+
+		"\7\f\2\2\u00a1\u00a6\5\26\f\2\u00a2\u00a3\7\7\2\2\u00a3\u00a5\5\26\f\2"+
+		"\u00a4\u00a2\3\2\2\2\u00a5\u00a8\3\2\2\2\u00a6\u00a4\3\2\2\2\u00a6\u00a7"+
+		"\3\2\2\2\u00a7\u00aa\3\2\2\2\u00a8\u00a6\3\2\2\2\u00a9\u00a1\3\2\2\2\u00a9"+
+		"\u00aa\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\u00ac\7\r\2\2\u00ac\u00ad\7\32"+
+		"\2\2\u00ad\u00ae\5\n\6\2\u00ae-\3\2\2\2\r>JQWuy~\u008e\u0096\u00a6\u00a9";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
