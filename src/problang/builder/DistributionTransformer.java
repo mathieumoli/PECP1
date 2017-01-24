@@ -103,8 +103,11 @@ public final class DistributionTransformer {
     private static int handleExpr(ProbabilisticLanguageParser.ExprContext expr, State s) {
         int value = getValue(expr.value(),s);
         // Si il y a une opération...
-        if (expr.operation() != null)
-            value = handleOperation(expr,s,value);
+        if (expr.operation() != null) {
+            value = handleOperation(expr, s, value);
+            if (expr.operation().mod() != null) //TODO voir si gérer comme ça ça passe (exp_mod surement pas quoi)
+                value %= getValue(expr.operation().mod().value(),s);
+        }
         return value;
     }
 

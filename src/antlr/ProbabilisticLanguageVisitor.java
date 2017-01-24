@@ -101,6 +101,12 @@ public interface ProbabilisticLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOp(ProbabilisticLanguageParser.OpContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProbabilisticLanguageParser#mod}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMod(ProbabilisticLanguageParser.ModContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProbabilisticLanguageParser#cond}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

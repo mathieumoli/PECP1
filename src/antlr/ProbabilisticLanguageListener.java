@@ -158,6 +158,16 @@ public interface ProbabilisticLanguageListener extends ParseTreeListener {
 	 */
 	void exitOp(ProbabilisticLanguageParser.OpContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProbabilisticLanguageParser#mod}.
+	 * @param ctx the parse tree
+	 */
+	void enterMod(ProbabilisticLanguageParser.ModContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProbabilisticLanguageParser#mod}.
+	 * @param ctx the parse tree
+	 */
+	void exitMod(ProbabilisticLanguageParser.ModContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProbabilisticLanguageParser#cond}.
 	 * @param ctx the parse tree
 	 */

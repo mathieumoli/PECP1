@@ -9,6 +9,8 @@ WS : ([ \t\r\n]+) -> skip ; // skip spaces, tabs, newlines
 ADD : '+';
 SUB : '-';
 MULT : '*';
+DIV : '/';
+POW : '^';
 
 EQ : '=';
 NEQ : '!=';
@@ -39,9 +41,9 @@ whileStatement: 'while' '(' cond ')' 'do' '{' commands '}';
 var: IDENT;
 expr: value operation?; //TODO je voudrais bien gérer plusieurs opérations... plus tard (genre x:=y+3*x)
 value: (NUMBER | var);
-operation: op value;
-op: ADD | SUB | MULT;
-
+operation: op value mod?;
+op: ADD | SUB | MULT | DIV | POW;
+mod: '[' 'mod' value ']';
 
 cond: expr comp expr; // je sais pas si vous préférez des value au lieu des expr ou 'var comp NUMBER'
 comp: EQ | NEQ | GT | GE | LT | LE;
