@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             // initialiser le lexer et le parser
-            ANTLRInputStream in = new ANTLRInputStream(new FileReader("out/production/Projet1/FichiersTest/affectation"));
+            ANTLRInputStream in = new ANTLRInputStream(new FileReader("out/production/Projet1/FichiersTest/CPA-EG"));
             ProbabilisticLanguageLexer lexer = new ProbabilisticLanguageLexer(in);
             BufferedTokenStream tokens = new CommonTokenStream(lexer);
             ProbabilisticLanguageParser parser = new ProbabilisticLanguageParser(tokens);
