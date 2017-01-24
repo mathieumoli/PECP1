@@ -275,6 +275,18 @@ public class ProbabilisticLanguageBaseListener implements ProbabilisticLanguageL
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctions(ProbabilisticLanguageParser.FunctionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunction(ProbabilisticLanguageParser.FunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunction(ProbabilisticLanguageParser.FunctionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

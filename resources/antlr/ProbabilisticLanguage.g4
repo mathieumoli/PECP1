@@ -24,7 +24,7 @@ ZQ : 'ZQ';
 IDENT : [a-zA-Z_][a-zA-Z_0-9]*;
 NUMBER : [\-]?[0-9]+;
 
-program: initialState commands functions EOF;
+program: initialState commands functions? EOF;
 
 initialState: 'initial_state' ':' '[' memory ']';
 memory: element (',' element)*;
@@ -52,4 +52,5 @@ probFunc: uniformDistrib | zq; //TODO gérer les appels de fonction
 uniformDistrib: '{' NUMBER (',' NUMBER)+ '}';
 zq: ZQ'(' NUMBER ')';
 
-functions:IDENT '('(var (',' var)*)?')' '=' commands;
+functions: function+;
+function: IDENT '('(var (',' var)*)?')' '=' commands;
