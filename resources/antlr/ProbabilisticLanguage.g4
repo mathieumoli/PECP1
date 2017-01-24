@@ -43,11 +43,11 @@ expr: value operation?; //TODO je voudrais bien gérer plusieurs opérations... 
 value: (NUMBER | var);
 operation: op value mod?;
 op: ADD | SUB | MULT | DIV | POW;
-mod: '[' 'mod' value ']';
+mod: '[' value ']';
 
 cond: expr comp expr; // je sais pas si vous préférez des value au lieu des expr ou 'var comp NUMBER'
 comp: EQ | NEQ | GT | GE | LT | LE;
 
 probFunc: uniformDistrib | zq;
 uniformDistrib: '{' NUMBER (',' NUMBER)+ '}';
-zq: ZQ '(' NUMBER ')';
+zq: ZQ'(' NUMBER ')';

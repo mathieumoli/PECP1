@@ -9,6 +9,10 @@ import java.util.Objects;
  */
 public class State {
     private Map<String, Integer> memory;
+    //TODO gérer les grands entiers
+    // Je pense qu'on va se limiter au Long
+    // Pour les booléens, on convient que 0=true et le reste est false
+    // Gérer l'écriture {0,1}^3 ? Pas envie
 
     public State() {
         memory = new HashMap<>();

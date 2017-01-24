@@ -1,2 +1,4 @@
+initial_state : [b:0, k_d:0, k_e:0, g:2, q:5]
 b := {0,1};
-k_d := {1, 2, 3, 4}; k_e := g^k_d mod q; k_e = k_e;
+k_d := {1, 2, 3, 4};
+k_e := g^k_d [q]
