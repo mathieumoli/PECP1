@@ -8,7 +8,7 @@ import java.util.Objects;
  * Created by lorynf on 07/01/17.
  */
 public class State {
-    private Map<String, Integer> memory;
+    private Map<String, Long> memory;
     //TODO gérer les grands entiers
     // Je pense qu'on va se limiter au Long
     // Pour les booléens, on convient que 0=true et le reste est false
@@ -22,11 +22,11 @@ public class State {
         memory = new HashMap<>(s.getMemory());
     }
 
-    public Map<String, Integer> getMemory() {
+    public Map<String, Long> getMemory() {
         return memory;
     }
 
-    public void addElement(String name, int value) {
+    public void addElement(String name, long value) {
         memory.put(name,value);
     }
 

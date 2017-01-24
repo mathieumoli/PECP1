@@ -68,7 +68,7 @@ public final class DistributionTransformer {
 
         // Premier cas : on affecte une expression
         if (p.getCommand(0).affectation().expr() != null) {
-            int value = handleExpr(p.getCommand(0).affectation().expr(), s);
+            long value = handleExpr(p.getCommand(0).affectation().expr(), s);
 
             s.getMemory().put(var, value);
 
@@ -82,7 +82,7 @@ public final class DistributionTransformer {
                 double proba = 1.0/(probFunc.uniformDistrib().NUMBER().size());
                 for (TerminalNode number : probFunc.uniformDistrib().NUMBER()) {
                     State s1 = new State(s);
-                    int value = Integer.parseInt(number.getText());
+                    long value = Integer.parseInt(number.getText());
                     s1.getMemory().put(var,value);
                     d1.addElement(new Configuration(p1, s1), proba * d.getElements().get(c));
                 }
@@ -90,7 +90,7 @@ public final class DistributionTransformer {
                 int q = Integer.parseInt(probFunc.zq().NUMBER().getText());
                 for (int i = 0; i < q; i++) {
                     State s1 = new State(s);
-                    s1.getMemory().put(var,i);
+                    s1.getMemory().put(var,(long)i);
                     d1.addElement(new Configuration(p1,s1), (1.0/q) * d.getElements().get(c));
                 }
             } else {
@@ -100,8 +100,8 @@ public final class DistributionTransformer {
         return d1;
     }
 
-    private static int handleExpr(ProbabilisticLanguageParser.ExprContext expr, State s) {
-        int value = getValue(expr.value(),s);
+    private static long handleExpr(ProbabilisticLanguageParser.ExprContext expr, State s) {
+        long value = getValue(expr.value(),s);
         // Si il y a une opération...
         if (expr.operation() != null) {
             value = handleOperation(expr, s, value);
@@ -111,8 +111,8 @@ public final class DistributionTransformer {
         return value;
     }
 
-    private static int getValue(ProbabilisticLanguageParser.ValueContext valueContext, State s) {
-        int value;
+    private static long getValue(ProbabilisticLanguageParser.ValueContext valueContext, State s) {
+        long value;
         // Si c'est un nombre, on récupère la valeur
         if (valueContext.NUMBER() != null) {
             value = Integer.parseInt(valueContext.NUMBER().getText());
@@ -126,9 +126,9 @@ public final class DistributionTransformer {
         return value;
     }
 
-    private static int handleOperation(ProbabilisticLanguageParser.ExprContext expr, State s, int value) {
+    private static long handleOperation(ProbabilisticLanguageParser.ExprContext expr, State s, long value) {
         try {
-            int value2 = getValue(expr.operation().value(),s);
+            long value2 = getValue(expr.operation().value(),s);
             return (int) engine.eval(value + expr.operation().op().getText() + value2 );
         } catch (ScriptException e) {
             e.printStackTrace();
@@ -144,8 +144,8 @@ public final class DistributionTransformer {
         ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
 
         ProbabilisticLanguageParser.CompContext comp  = condition.comp();
-        int value1 = handleExpr(expr1, etat);
-        int value2 = handleExpr(expr2,etat);
+        long value1 = handleExpr(expr1, etat);
+        long value2 = handleExpr(expr2,etat);
 
         try {
             if((boolean) engine.eval(value1 + comp.getText() + value2)){
@@ -175,8 +175,8 @@ public final class DistributionTransformer {
         ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
 
         ProbabilisticLanguageParser.CompContext comp  = condition.comp();
-        int value1 = handleExpr(expr1, state);
-        int value2 = handleExpr(expr2, state);
+        long value1 = handleExpr(expr1, state);
+        long value2 = handleExpr(expr2, state);
         List<ProbabilisticLanguageParser.CommandContext> listCodeExecute = new ArrayList<>();
 
         try {
