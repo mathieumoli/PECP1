@@ -136,6 +136,14 @@ public final class DistributionTransformer {
                 }
             } else {
                 //TODO les fonctions encryption
+                assert probFunc.functionIdentifier() != null;
+                // Creer une classe fonction ou considérer comme un programme
+                // Avoir une liste des fonctions
+                // Chercher une fonction dans la liste (plutot une map du coup)
+                // Ajouter la liste des commandes de la fonction au début de P1
+                // Espérer que ça passe :D
+                // du coup ça ressemble un peu au "inline" de la prof
+
             }
         }
         return d1;

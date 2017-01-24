@@ -237,4 +237,14 @@ public interface ProbabilisticLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunction(ProbabilisticLanguageParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProbabilisticLanguageParser#functionIdentifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionIdentifier(ProbabilisticLanguageParser.FunctionIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProbabilisticLanguageParser#functionIdentifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionIdentifier(ProbabilisticLanguageParser.FunctionIdentifierContext ctx);
 }

@@ -48,9 +48,10 @@ mod: '[' value ']';
 cond: expr comp expr;
 comp: EQ | NEQ | GT | GE | LT | LE;
 
-probFunc: uniformDistrib | zq; //TODO gérer les appels de fonction
+probFunc: uniformDistrib | zq | functionIdentifier;
 uniformDistrib: '{' NUMBER (',' NUMBER)+ '}';
-zq: ZQ'(' NUMBER ')';
+zq: ZQ'(' NUMBER ')'; //TODO gérer sans le 0
 
 functions: function+;
-function: IDENT '('(var (',' var)*)?')' '=' commands;
+function: functionIdentifier '=' commands;
+functionIdentifier: IDENT '('(var (',' var)*)?')';
