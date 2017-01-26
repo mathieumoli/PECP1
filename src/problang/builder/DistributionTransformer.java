@@ -5,7 +5,6 @@ import antlr.ProbabilisticLanguageParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.TerminalNode;
 import problang.elems.Configuration;
 import problang.elems.Distribution;
 import problang.elems.Program;
@@ -18,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static problang.utils.Utils.*;
+import static problang.utils.Utils.getValue;
+import static problang.utils.Utils.handleCondition;
+import static problang.utils.Utils.handleExpr;
 
 
 /**
@@ -122,19 +123,22 @@ public final class DistributionTransformer {
             assert p.getCommand(0).affectation().probFunc() != null;
             ProbabilisticLanguageParser.ProbFuncContext probFunc = p.getCommand(0).affectation().probFunc();
             if (probFunc.uniformDistrib() != null) {
-                double proba = 1.0/(probFunc.uniformDistrib().NUMBER().size());
-                for (TerminalNode number : probFunc.uniformDistrib().NUMBER()) {
+                double proba = 1.0/(probFunc.uniformDistrib().value().size());
+                for (ProbabilisticLanguageParser.ValueContext valueContext : probFunc.uniformDistrib().value()) {
+                    long value = getValue(valueContext,s);
                     State s1 = new State(s);
-                    long value = Integer.parseInt(number.getText());
                     s1.getMemory().put(var,value);
                     d1.addElement(new Configuration(p1, s1), proba * d.getElements().get(c));
                 }
             } else if (probFunc.zq() != null) {
-                int q = Integer.parseInt(probFunc.zq().NUMBER().getText());
-                for (int i = 0; i < q; i++) {
+                int i = (probFunc.zq().noNull() != null) ? 1 : 0;
+                long q = getValue(probFunc.zq().value(),s);
+                double proba = 1.0 / (q-i);
+
+                for (;i < q; i++) {
                     State s1 = new State(s);
                     s1.getMemory().put(var,(long)i);
-                    d1.addElement(new Configuration(p1,s1), (1.0/q) * d.getElements().get(c));
+                    d1.addElement(new Configuration(p1,s1), proba * d.getElements().get(c));
                 }
             } else {
                 //TODO les fonctions encryption
@@ -147,32 +151,6 @@ public final class DistributionTransformer {
                 // du coup ça ressemble un peu au "inline" de la prof
 
             }
-        }
-        return d1;
-    }
-
-
-
-    private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
-        Program p = c.getProgram();
-        State s = c.getState();
-
-        try {
-            boolean cond = handleCondition(p.getCommand(0).whileStatement().cond(),s);
-            if(cond){
-                List<ProbabilisticLanguageParser.CommandContext> liste = p.getCommand(0).whileStatement().commands().command();
-                liste.addAll(p.getCommands());
-                Program p1 = new Program(liste);
-                Configuration conf = new Configuration(p1, s);
-                d1.addElement(conf, 1.0 * d.getElements().get(c));
-            }else
-            {
-                Program pf = new Program(p.getCommands().subList(1, p.getCommands().size()));
-                Configuration conf = new Configuration(pf, s);
-                d1.addElement(conf, 1.0 * d.getElements().get(c));
-            }
-        } catch (ScriptException e) {
-            e.printStackTrace();
         }
         return d1;
     }
@@ -193,6 +171,30 @@ public final class DistributionTransformer {
             listCodeExecute.addAll(program.getCommands().subList(1, program.getCommands().size()));
             Configuration newConfig = new Configuration(new Program(listCodeExecute), s);
             d1.addElement(newConfig, 1.0*d.getElements().get(c));
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
+        return d1;
+    }
+
+    private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
+        Program p = c.getProgram();
+        State s = c.getState();
+
+        try {
+            boolean cond = handleCondition(p.getCommand(0).whileStatement().cond(),s);
+            if(cond){
+                List<ProbabilisticLanguageParser.CommandContext> liste = p.getCommand(0).whileStatement().commands().command();
+                liste.addAll(p.getCommands());
+                Program p1 = new Program(liste);
+                Configuration conf = new Configuration(p1, s);
+                d1.addElement(conf, 1.0 * d.getElements().get(c));
+            }else
+            {
+                Program pf = new Program(p.getCommands().subList(1, p.getCommands().size()));
+                Configuration conf = new Configuration(pf, s);
+                d1.addElement(conf, 1.0 * d.getElements().get(c));
+            }
         } catch (ScriptException e) {
             e.printStackTrace();
         }

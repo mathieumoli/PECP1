@@ -228,6 +228,16 @@ public interface ProbabilisticLanguageListener extends ParseTreeListener {
 	 */
 	void exitZq(ProbabilisticLanguageParser.ZqContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProbabilisticLanguageParser#noNull}.
+	 * @param ctx the parse tree
+	 */
+	void enterNoNull(ProbabilisticLanguageParser.NoNullContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProbabilisticLanguageParser#noNull}.
+	 * @param ctx the parse tree
+	 */
+	void exitNoNull(ProbabilisticLanguageParser.NoNullContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProbabilisticLanguageParser#functions}.
 	 * @param ctx the parse tree
 	 */

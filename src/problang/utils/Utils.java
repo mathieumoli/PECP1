@@ -43,7 +43,11 @@ public final class Utils {
     public static long handleOperation(ProbabilisticLanguageParser.ExprContext expr, State s, long value) {
         try {
             long value2 = getValue(expr.operation().value(),s);
-            return (int) engine.eval(value + expr.operation().op().getText() + value2 );
+            if (expr.operation().op().POW() != null) {
+                System.out.println((long) Math.pow(value,value2));
+                return (long) Math.pow(value,value2);
+            }
+           else return (int) engine.eval(value + expr.operation().op().getText() + value2 );
         } catch (ScriptException e) {
             e.printStackTrace();
         }

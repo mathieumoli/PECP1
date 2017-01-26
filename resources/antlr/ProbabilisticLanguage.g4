@@ -31,7 +31,7 @@ memory: element (',' element)*;
 element: var ':' NUMBER;
 
 commands: command (';' command)*;
-command: affectation | skip | ifStatement | whileStatement | adversaryCode; //TODO ajout d'une règle pour gérer le code adversaire
+command: affectation | skip | ifStatement | whileStatement | adversaryCode;
 
 affectation: var ':=' (expr|probFunc);
 skip: 'skip';
@@ -50,8 +50,9 @@ cond: expr comp expr;
 comp: EQ | NEQ | GT | GE | LT | LE;
 
 probFunc: uniformDistrib | zq | functionIdentifier;
-uniformDistrib: '{' NUMBER (',' NUMBER)+ '}';
-zq: ZQ'(' NUMBER ')'; //TODO gérer sans le 0
+uniformDistrib: '{' value (',' value)+ '}';
+zq: ZQ '(' value ')' noNull?;
+noNull: '*';
 
 functions: function+;
 function: functionIdentifier '=' commands;
