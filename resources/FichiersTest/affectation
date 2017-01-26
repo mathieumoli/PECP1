@@ -1,2 +1,4 @@
 initial_state: [x:0, y:0]
 A[x]
+
+function() = y:= 1

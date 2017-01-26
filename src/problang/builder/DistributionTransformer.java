@@ -13,13 +13,9 @@ import problang.elems.State;
 import javax.script.ScriptException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-import static problang.utils.Utils.getValue;
-import static problang.utils.Utils.handleCondition;
-import static problang.utils.Utils.handleExpr;
+import static problang.utils.Utils.*;
 
 
 /**
@@ -46,6 +42,13 @@ public final class DistributionTransformer {
         Distribution initialDistribution = new Distribution();
         initialDistribution.getElements().put(initialConfiguration,1.0);
         System.out.println(initialDistribution);
+
+        Map<String, Program> functions = new HashMap<>(); //TODO Comment gérer les variables :'(
+        if (programContext.functions() != null) {
+            for (ProbabilisticLanguageParser.FunctionContext function : programContext.functions().function()) {
+                functions.put(function.functionIdentifier().IDENT().getText(), new Program(function.commands().command()));
+            }
+        }
 
         boolean goForward;
         Distribution distribution = initialDistribution;
