@@ -31,12 +31,13 @@ memory: element (',' element)*;
 element: var ':' NUMBER;
 
 commands: command (';' command)*;
-command: affectation | skip | ifStatement | whileStatement; //TODO ajout d'une règle pour gérer le code adversaire
+command: affectation | skip | ifStatement | whileStatement | adversaryCode; //TODO ajout d'une règle pour gérer le code adversaire
 
 affectation: var ':=' (expr|probFunc);
 skip: 'skip';
 ifStatement: 'if' '(' cond ')' 'then' '{' commands '}' 'else' '{' commands '}';
 whileStatement: 'while' '(' cond ')' 'do' '{' commands '}';
+adversaryCode: 'A' '['var']'; // code de l'adversaire avec la variable qu'il va modifier (valeurs possibles: 0 ou 1)
 
 var: IDENT;
 expr: value operation?; //TODO gérer plusieurs opérations... plus tard (genre x:=y+3*x)

@@ -136,6 +136,18 @@ public class ProbabilisticLanguageBaseListener implements ProbabilisticLanguageL
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAdversaryCode(ProbabilisticLanguageParser.AdversaryCodeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAdversaryCode(ProbabilisticLanguageParser.AdversaryCodeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVar(ProbabilisticLanguageParser.VarContext ctx) { }
 	/**
 	 * {@inheritDoc}

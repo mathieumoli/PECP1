@@ -1,11 +1,2 @@
 initial_state: [x:0, y:0]
-
-x:=ZQ(3);
-y:= x+3;
-if (y > 0) then {
-    y := y - 1;
-    x := x+1
-} else {
-    skip
-};
-x:=9
+A[x]

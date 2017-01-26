@@ -108,6 +108,16 @@ public interface ProbabilisticLanguageListener extends ParseTreeListener {
 	 */
 	void exitWhileStatement(ProbabilisticLanguageParser.WhileStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProbabilisticLanguageParser#adversaryCode}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdversaryCode(ProbabilisticLanguageParser.AdversaryCodeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProbabilisticLanguageParser#adversaryCode}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdversaryCode(ProbabilisticLanguageParser.AdversaryCodeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProbabilisticLanguageParser#var}.
 	 * @param ctx the parse tree
 	 */

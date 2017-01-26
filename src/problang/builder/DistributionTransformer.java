@@ -11,22 +11,20 @@ import problang.elems.Distribution;
 import problang.elems.Program;
 import problang.elems.State;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static problang.utils.Utils.*;
 
 
 /**
  * Created by lorynf on 09/01/17.
  */
 public final class DistributionTransformer {
-
-    private static ScriptEngineManager manager = new ScriptEngineManager();
-    private static ScriptEngine engine = manager.getEngineByName("JavaScript");
 
     public static Distribution getFinalDistribution(String filePath) throws IOException {
         // initialiser le lexer et le parser
@@ -87,6 +85,10 @@ public final class DistributionTransformer {
                 // Si c'est un if
                 else if (p.getCommand(0).ifStatement() != null) {
                     d1 = applyIfRule(c, d1, d);
+                }
+                // Si c'est A[E] (le code de l'adversaire)
+                else if (p.getCommand(0).adversaryCode() != null) {
+                    d1 = applyUnknownRule(c, d1, d);
                 }
                 // Il ne reste que le skip (normalement)
                 else {
@@ -149,64 +151,24 @@ public final class DistributionTransformer {
         return d1;
     }
 
-    private static long handleExpr(ProbabilisticLanguageParser.ExprContext expr, State s) {
-        long value = getValue(expr.value(),s);
-        // Si il y a une opération...
-        if (expr.operation() != null) {
-            value = handleOperation(expr, s, value);
-            if (expr.operation().mod() != null) //TODO voir si gérer comme ça ça passe (exp_mod surement pas quoi)
-                value %= getValue(expr.operation().mod().value(),s);
-        }
-        return value;
-    }
 
-    private static long getValue(ProbabilisticLanguageParser.ValueContext valueContext, State s) {
-        long value;
-        // Si c'est un nombre, on récupère la valeur
-        if (valueContext.NUMBER() != null) {
-            value = Integer.parseInt(valueContext.NUMBER().getText());
-        }
-        // Si c'est une variable, il faut récupérer la valeur dans la mémoire
-        else {
-            assert valueContext.var() != null;
-            String memVar = valueContext.var().getText();
-            value = s.getMemory().get(memVar);
-        }
-        return value;
-    }
-
-    private static long handleOperation(ProbabilisticLanguageParser.ExprContext expr, State s, long value) {
-        try {
-            long value2 = getValue(expr.operation().value(),s);
-            return (int) engine.eval(value + expr.operation().op().getText() + value2 );
-        } catch (ScriptException e) {
-            e.printStackTrace();
-        }
-        return value;
-    }
 
     private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
         Program p = c.getProgram();
-        State etat = c.getState();
-        ProbabilisticLanguageParser.CondContext condition = p.getCommand(0).whileStatement().cond();
-        ProbabilisticLanguageParser.ExprContext expr1 = condition.expr(0);
-        ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
-
-        ProbabilisticLanguageParser.CompContext comp  = condition.comp();
-        long value1 = handleExpr(expr1, etat);
-        long value2 = handleExpr(expr2,etat);
+        State s = c.getState();
 
         try {
-            if((boolean) engine.eval(value1 + comp.getText() + value2)){
+            boolean cond = handleCondition(p.getCommand(0).whileStatement().cond(),s);
+            if(cond){
                 List<ProbabilisticLanguageParser.CommandContext> liste = p.getCommand(0).whileStatement().commands().command();
                 liste.addAll(p.getCommands());
                 Program p1 = new Program(liste);
-                Configuration conf = new Configuration(p1, etat);
+                Configuration conf = new Configuration(p1, s);
                 d1.addElement(conf, 1.0 * d.getElements().get(c));
             }else
             {
                 Program pf = new Program(p.getCommands().subList(1, p.getCommands().size()));
-                Configuration conf = new Configuration(pf, etat);
+                Configuration conf = new Configuration(pf, s);
                 d1.addElement(conf, 1.0 * d.getElements().get(c));
             }
         } catch (ScriptException e) {
@@ -217,30 +179,50 @@ public final class DistributionTransformer {
 
     private static Distribution applyIfRule(Configuration c, Distribution d1, Distribution d) {
         Program program = c.getProgram();
-        State state = c.getState();
-
-        ProbabilisticLanguageParser.CondContext condition = program.getCommand(0).ifStatement().cond();
-        ProbabilisticLanguageParser.ExprContext expr1 = condition.expr(0);
-        ProbabilisticLanguageParser.ExprContext expr2 = condition.expr(1);
-
-        ProbabilisticLanguageParser.CompContext comp  = condition.comp();
-        long value1 = handleExpr(expr1, state);
-        long value2 = handleExpr(expr2, state);
+        State s = c.getState();
         List<ProbabilisticLanguageParser.CommandContext> listCodeExecute = new ArrayList<>();
 
         try {
-            if ((boolean) engine.eval(value1 + comp.getText() + value2)) {
+            boolean cond = handleCondition(program.getCommand(0).ifStatement().cond(),s);
+            if (cond) {
                 listCodeExecute.addAll(program.getCommand(0).ifStatement().commands(0).command());
 
             } else {
                 listCodeExecute.addAll(program.getCommand(0).ifStatement().commands(1).command());
             }
             listCodeExecute.addAll(program.getCommands().subList(1, program.getCommands().size()));
-            Configuration newConfig = new Configuration(new Program(listCodeExecute), state);
+            Configuration newConfig = new Configuration(new Program(listCodeExecute), s);
             d1.addElement(newConfig, 1.0*d.getElements().get(c));
         } catch (ScriptException e) {
             e.printStackTrace();
         }
+        return d1;
+    }
+
+    private static Distribution applyUnknownRule(Configuration c, Distribution d1, Distribution d) {
+        Program p = c.getProgram();
+        State s = c.getState();
+
+        // On crée le programme qu'on aura après l'execution du code de l'adversaire (le reste du programme)
+        Program p1 = new Program(p.getCommands().subList(1, p.getCommands().size()));
+
+        // On récupère la variable que l'adversaire peut modifier
+        String adversaryVar = p.getCommand(0).adversaryCode().var().getText();
+
+        // On génère la probabilité que la variable vaille 0 et on en déduit la  probabilité pour 1
+        Random r = new Random();
+        double prob0 = r.nextDouble();
+        double prob1 = 1.0 - prob0;
+
+        // On crée la configuration associé à chaque probabilité et on les ajoute à la distribution
+        State s0 = new State(s);
+        s0.getMemory().put(adversaryVar, (long)0);
+        d1.addElement(new Configuration(p1, s0), prob0 * d.getElements().get(c));
+
+        State s1 = new State(s);
+        s0.getMemory().put(adversaryVar, (long)1);
+        d1.addElement(new Configuration(p1, s1), prob1 * d.getElements().get(c));
+
         return d1;
     }
 
