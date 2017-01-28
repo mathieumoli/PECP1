@@ -3,6 +3,7 @@ package problang.elems;
 
 import antlr.ProbabilisticLanguageParser;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,10 @@ import java.util.Objects;
  */
 public class Program {
     private List<ProbabilisticLanguageParser.CommandContext> commands;
+
+    public Program() {
+        commands = new ArrayList<>();
+    }
 
     public Program(List<ProbabilisticLanguageParser.CommandContext> commandsList) {
         commands = commandsList;

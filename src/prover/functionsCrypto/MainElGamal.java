@@ -1,10 +1,8 @@
-package functionsCrypto;
+package prover.functionsCrypto;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
-
-import org.antlr.v4.parse.ANTLRParser.sync_return;
 
 public class MainElGamal {
     public static void main(String[] args) {

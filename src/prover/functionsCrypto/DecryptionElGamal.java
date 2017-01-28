@@ -1,4 +1,4 @@
-package functionsCrypto;
+package prover.functionsCrypto;
 
 import java.math.BigInteger;
 

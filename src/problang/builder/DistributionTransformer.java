@@ -21,7 +21,6 @@ import static problang.utils.ExprHandler.*;
 public final class DistributionTransformer {
     static Map<String, Function> functions = new HashMap<>();
 
-
     public static Distribution getFinalDistribution(String filePath) throws IOException {
         // initialiser le lexer et le parser
         ANTLRInputStream in = new ANTLRInputStream(new FileReader(filePath));
@@ -35,6 +34,7 @@ public final class DistributionTransformer {
         for (ProbabilisticLanguageParser.ElementContext element :programContext.initialState().memory().element()) {
             initialState.addElement(element.var().IDENT().getText(),Integer.parseInt(element.NUMBER().getText()));
         }
+
         //Création du programme avec la liste des commandes
         Program initialProgram = new Program(programContext.commands().command());
         Configuration initialConfiguration = new Configuration(initialProgram, initialState);
