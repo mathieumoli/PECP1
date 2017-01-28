@@ -5,23 +5,22 @@ import antlr.ProbabilisticLanguageParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import problang.elems.Configuration;
-import problang.elems.Distribution;
-import problang.elems.Program;
-import problang.elems.State;
+import problang.elems.*;
 
 import javax.script.ScriptException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-import static problang.utils.Utils.*;
+import static problang.utils.ExprHandler.*;
 
 
 /**
  * Created by lorynf on 09/01/17.
  */
 public final class DistributionTransformer {
+    static Map<String, Function> functions = new HashMap<>();
+
 
     public static Distribution getFinalDistribution(String filePath) throws IOException {
         // initialiser le lexer et le parser
@@ -43,13 +42,18 @@ public final class DistributionTransformer {
         initialDistribution.getElements().put(initialConfiguration,1.0);
         System.out.println(initialDistribution);
 
-        Map<String, Program> functions = new HashMap<>(); //TODO Comment gérer les variables :'(
+        // Récupération des fonctions
         if (programContext.functions() != null) {
             for (ProbabilisticLanguageParser.FunctionContext function : programContext.functions().function()) {
-                functions.put(function.functionIdentifier().IDENT().getText(), new Program(function.commands().command()));
+                String functionName = function.functionIdentifier().IDENT().getText();
+                List<String> functionVars = new ArrayList<>();
+                for (ProbabilisticLanguageParser.VarContext varContext : function.functionIdentifier().var()) {
+                    functionVars.add(varContext.IDENT().getText());
+                }
+                List<ProbabilisticLanguageParser.CommandContext> functionCommands = function.commands().command();
+                functions.put(functionName, new Function(functionName, functionVars, functionCommands));
             }
         }
-
         boolean goForward;
         Distribution distribution = initialDistribution;
         do {
@@ -144,14 +148,12 @@ public final class DistributionTransformer {
                     d1.addElement(new Configuration(p1,s1), proba * d.getElements().get(c));
                 }
             } else {
-                //TODO les fonctions encryption
                 assert probFunc.functionIdentifier() != null;
-                // Creer une classe fonction ou considérer comme un programme
-                // Avoir une liste des fonctions
-                // Chercher une fonction dans la liste (plutot une map du coup)
-                // Ajouter la liste des commandes de la fonction au début de P1
-                // Espérer que ça passe :D
+                Function f = functions.get(probFunc.functionIdentifier().IDENT().getText());
+                p1.getCommands().addAll(0,f.getCommands());
+                d1.addElement(new Configuration(p1,s), 1.0 * d.getElements().get(c));
                 // du coup ça ressemble un peu au "inline" de la prof
+                //TODO Manque la vérif des parametres
 
             }
         }

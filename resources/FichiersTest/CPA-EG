@@ -3,3 +3,5 @@ b := {0,1};
 k_d := ZQ(q)*;
 k_e := g^k_d [q];
 A[a]
+
+function(a) = a := 0

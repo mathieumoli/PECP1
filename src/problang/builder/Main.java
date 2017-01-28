@@ -23,7 +23,7 @@ public class Main {
 /*
 Petit point pour Loryn:
     - Tenter l'appel de fonctions et voir avec la prof si ça passe (et si ça fait un inline)
-    - Gérer le code de l'adversaire, qui est le seul à pouvoir modifier une variable a, distribution RANDOM
+    - Gérer le code de l'adversaire, qui est le seul à pouvoir modifier une variable a, distribution RANDOM -> OK
     - Est-ce qu'on doit faire les transformations de code nous-même pour ElGamal ?
     - Implémentation de la fonction d'équivalence entre deux progammes pour une liste de variables ?
         equiv(p1,p2,varList)

@@ -10,7 +10,7 @@ import javax.script.ScriptException;
 /**
  * Created by lorynf on 26/01/17.
  */
-public final class Utils {
+public final class ExprHandler {
     private static ScriptEngineManager manager = new ScriptEngineManager();
     private static ScriptEngine engine = manager.getEngineByName("JavaScript");
 
@@ -44,7 +44,6 @@ public final class Utils {
         try {
             long value2 = getValue(expr.operation().value(),s);
             if (expr.operation().op().POW() != null) {
-                System.out.println((long) Math.pow(value,value2));
                 return (long) Math.pow(value,value2);
             }
            else return (int) engine.eval(value + expr.operation().op().getText() + value2 );

@@ -26,14 +26,18 @@ public class Program {
 
     @Override
     public String toString() {
-        String ret = "";
-        for (ProbabilisticLanguageParser.CommandContext command : commands) {
-            ret += command.getText() + "; ";
+
+        String commandsString;
+        if (commands.isEmpty())  {
+            commandsString = "tick";
         }
-        if (ret.isEmpty()) {
-            ret = "tic";
+        else {
+            commandsString = commands.get(0).getText();
+            for (int i = 1; i < commands.size(); i++) {
+                commandsString += "; " + commands.get(i).getText();
+            }
         }
-        return ret;
+        return commandsString;
     }
 
     @Override
