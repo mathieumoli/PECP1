@@ -40,7 +40,7 @@ public final class DistributionTransformer {
         Program initialProgram = new Program(programContext.commands().command());
         Configuration initialConfiguration = new Configuration(initialProgram, initialState);
         Distribution initialDistribution = new Distribution();
-        initialDistribution.getElements().put(initialConfiguration,1.0);
+        initialDistribution.getElements().put(initialConfiguration, (float)1.0);
         System.out.println(initialDistribution);
 
         // Récupération des fonctions
@@ -124,14 +124,14 @@ public final class DistributionTransformer {
 
             s.getMemory().put(var, value);
 
-            d1.addElement(new Configuration(p1, s), 1.0 * d.getElements().get(c));
+            d1.addElement(new Configuration(p1, s), (float) 1.0 * d.getElements().get(c));
         }
         // Deuxième cas : on affecte une fonction probabiliste
         else {
             assert p.getCommand(0).affectation().probFunc() != null;
             ProbabilisticLanguageParser.ProbFuncContext probFunc = p.getCommand(0).affectation().probFunc();
             if (probFunc.uniformDistrib() != null) {
-                double proba = 1.0/(probFunc.uniformDistrib().value().size());
+                float proba = (float) 1.0/(probFunc.uniformDistrib().value().size());
                 for (ProbabilisticLanguageParser.ValueContext valueContext : probFunc.uniformDistrib().value()) {
                     long value = getValue(valueContext,s);
                     State s1 = new State(s);
@@ -141,18 +141,18 @@ public final class DistributionTransformer {
             } else if (probFunc.zq() != null) {
                 int i = (probFunc.zq().noNull() != null) ? 1 : 0;
                 long q = getValue(probFunc.zq().value(),s);
-                double proba = 1.0 / (q-i);
+                float proba = (float) 1.0 / (q-i);
 
                 for (;i < q; i++) {
                     State s1 = new State(s);
                     s1.getMemory().put(var,(long)i);
-                    d1.addElement(new Configuration(p1,s1), proba * d.getElements().get(c));
+                    d1.addElement(new Configuration(p1,s1), proba *  d.getElements().get(c));
                 }
             } else {
                 assert probFunc.functionIdentifier() != null;
                 Function f = functions.get(probFunc.functionIdentifier().IDENT().getText());
                 p1.getCommands().addAll(0,f.getCommands());
-                d1.addElement(new Configuration(p1,s), 1.0 * d.getElements().get(c));
+                d1.addElement(new Configuration(p1,s), (float) 1.0 * d.getElements().get(c));
                 // du coup ça ressemble un peu au "inline" de la prof
                 //TODO Manque la vérif des parametres
 
@@ -176,7 +176,7 @@ public final class DistributionTransformer {
             }
             listCodeExecute.addAll(program.getCommands().subList(1, program.getCommands().size()));
             Configuration newConfig = new Configuration(new Program(listCodeExecute), s);
-            d1.addElement(newConfig, 1.0*d.getElements().get(c));
+            d1.addElement(newConfig, (float)1.0*d.getElements().get(c));
         } catch (ScriptException e) {
             e.printStackTrace();
         }
@@ -194,12 +194,12 @@ public final class DistributionTransformer {
                 liste.addAll(p.getCommands());
                 Program p1 = new Program(liste);
                 Configuration conf = new Configuration(p1, s);
-                d1.addElement(conf, 1.0 * d.getElements().get(c));
+                d1.addElement(conf, (float) 1.0 * d.getElements().get(c));
             }else
             {
                 Program pf = new Program(p.getCommands().subList(1, p.getCommands().size()));
                 Configuration conf = new Configuration(pf, s);
-                d1.addElement(conf, 1.0 * d.getElements().get(c));
+                d1.addElement(conf, (float) 1.0 * d.getElements().get(c));
             }
         } catch (ScriptException e) {
             e.printStackTrace();
@@ -218,9 +218,10 @@ public final class DistributionTransformer {
         String adversaryVar = p.getCommand(0).adversaryCode().var().getText();
 
         // On génère la probabilité que la variable vaille 0 et on en déduit la  probabilité pour 1
-        Random r = new Random();
-        double prob0 = r.nextDouble();
-        double prob1 = 1.0 - prob0;
+        //Random r = new Random();
+        //double prob0 = r.nextDouble();
+        float prob0 = (float) 0.5;
+        float prob1 = (float) 1.0 - prob0;
 
         // On crée la configuration associé à chaque probabilité et on les ajoute à la distribution
         State s0 = new State(s);
@@ -241,7 +242,7 @@ public final class DistributionTransformer {
         // On crée le programme qu'on aura après le skip (le reste du programme)
         Program p1 = new Program(p.getCommands().subList(1, p.getCommands().size()));
 
-        d1.addElement(new Configuration(p1,s), 1.0 * d.getElements().get(c));
+        d1.addElement(new Configuration(p1,s), (float) 1.0 * d.getElements().get(c));
         return d1;
     }
 }

@@ -2,9 +2,9 @@ initial_state: [x:0, y:0, z:0, q:11]
 
 z := 0;
 y := 3;
-if (z = 0) then {
+if (z == 0) then {
     x := ZQ(q);
-    x := x ∗ z;
+    x := x * z
 } else {
     x := 42
 }

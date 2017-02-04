@@ -1,12 +1,12 @@
-initial_state: [secretDoor:0, playerChoice:0, hostChoice:0]
+initial_state: [secretDoor:0, playerChoice:0, hostChoice:0, notChosen:0]
 
 secretDoor := {0, 1, 2};
 playerChoice := {0, 1, 2};
 hostChoice := {0, 1, 2};
-while (hostChoice == playerChoice OR hostChoice == secretDoor) do {
-    hostChoice := (hostChoice + 1) mod 3
-}
+while (hostChoice == playerChoice) do {
+    hostChoice := hostChoice + 1 [3]
+};
 notChosen := 0;
-while (notChosen == playerChoice OR hostChoice == notChosen) do {
-    notChosen := (notChosen + 1)
+while (notChosen == playerChoice) do {
+    notChosen := notChosen + 1 [3]
 }

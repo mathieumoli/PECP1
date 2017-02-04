@@ -7,13 +7,13 @@ import java.util.Map;
  * Created by lorynf on 07/01/17.
  */
 public class Distribution {
-    private Map<Configuration,Double> elements;
+    private Map<Configuration,Float> elements;
 
     public Distribution() {
         elements = new HashMap<>();
     }
 
-    public Map<Configuration, Double> getElements() {
+    public Map<Configuration, Float> getElements() {
         return elements;
     }
 
@@ -22,7 +22,7 @@ public class Distribution {
         return elements.toString();
     }
 
-    public void addElement(Configuration configuration, double probability) {
+    public void addElement(Configuration configuration, float probability) {
         for (Configuration c : elements.keySet()) {
             if (c.equals(configuration)) {
                 elements.put(c, elements.get(c) + probability);

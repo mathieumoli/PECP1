@@ -1,4 +1,4 @@
-initial_state: [x:0]
+initial_state: [x:0, z:0]
 
 x := 0;
 if (x == 0)

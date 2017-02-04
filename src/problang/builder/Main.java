@@ -2,7 +2,10 @@ package problang.builder;
 
 import problang.exceptions.InfiniteProgramException;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lorynf on 10/01/17.
@@ -10,17 +13,36 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         try {
+            File tdFiles = new File("out/production/Projet1/TDs");
+            for (File subFile : getAllSubFiles(tdFiles)) {
+                System.out.println("Distribution pour le fichier "+subFile.getPath());
+                DistributionTransformer.getFinalDistribution(subFile.getPath());
+                System.out.println("\n\n");
+            }
             //System.out.println("Distributions pour CPA-EG");
             //DistributionTransformer.getFinalDistribution("out/production/Projet1/FichiersTest/CPA-EG");
-            System.out.println();
+            /*System.out.println();
             System.out.println();
             System.out.println("Distributions pour le fichier test");
             DistributionTransformer.getFinalDistribution("out/production/Projet1/FichiersTest/affectation");
+        */
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InfiniteProgramException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private static List<File> getAllSubFiles (File f) {
+        List<File> fileList = new ArrayList<>();
+        for (File subFile : f.listFiles()) {
+            if (subFile.isDirectory()) {
+                fileList.addAll(getAllSubFiles(subFile));
+            } else {
+                fileList.add(subFile);
+            }
+        }
+        return fileList;
     }
 }
 
