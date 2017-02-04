@@ -2,5 +2,4 @@ initial_state : [b:0, k_d:0, k_e:0, g:3, q:11, a:0]
 
 b := {0,1};
 k_d := ZQ(q)*;
-k_e := g^k_d [q];
-A[a]
+k_e := g^k_d [q]

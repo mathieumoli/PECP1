@@ -60,6 +60,12 @@ public class Main {
         List<String> varY = new ArrayList<>(); varY.add("y");
         List<String> varXY = new ArrayList<>(); varXY.add("x"); varXY.add("y");
 
+        String filePath1 = "out/production/Projet1/ElGamal/CPA-EG";
+        String filePath2 = "out/production/Projet1/ElGamal/DDH0";
+        List<String> vars = new ArrayList<>();
+        vars.add("a");
+        vars.add("b");
+
         try {
             System.out.println("Equivalence entre P1 et P2 pour la variable x: "+((isEquivalent(p1,p2,varX)) ? "oui" : "non"));
             System.out.println("\n");
@@ -68,28 +74,14 @@ public class Main {
             System.out.println("Equivalence entre P3 et P4 pour la variable x: "+((isEquivalent(p3,p4,varX)) ? "oui" : "non"));
             System.out.println("\n");
             System.out.println("Equivalence entre P4 et P5 pour la variable z: "+((isEquivalent(p4,p5,varY)) ? "oui" : "non"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InfiniteProgramException e) {
-            e.printStackTrace();
-        }
 
-
-
-
-
-
-        /*String filePath1 = "out/production/Projet1/FichiersTest/CPA-EG";
-        String filePath2 = "out/production/Projet1/FichiersTest/DDH0";
-        List<String> vars = new ArrayList<>();
-        vars.add("a");
-        vars.add("b");
-        try {
+            System.out.println("\n");
             System.out.println("Equivalent: "+ ((isEquivalent(filePath1,filePath2,vars)) ? "oui" : "non"));
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InfiniteProgramException e) {
-            System.out.println(e.getMessage());
-        }*/
+            System.err.println(e.getMessage());
+        }
     }
 }

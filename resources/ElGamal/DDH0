@@ -2,6 +2,4 @@ initial_state : [b:0, k_d:0, k_e:0, g:3, q:11, a:0, d:0, r:0]
 
 k_d := ZQ(q)*;
 r := ZQ(q)*;
-b := {0,1};
-A[a];
-if (a == b) then {d:= 0} else {d := 1}
+b := {0,1}
