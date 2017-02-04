@@ -18,12 +18,12 @@ public final class ExprHandler {
     private static ScriptEngine engine = manager.getEngineByName("JavaScript");
 
     public static long handleExpr(ProbabilisticLanguageParser.ExprContext expr, State s) {
-        long value = getValue(expr.value(),s);
+        long value = getValue(expr.value(), s);
         // Si il y a une opération...
         if (expr.operation() != null) {
             value = handleOperation(expr, s, value);
             if (expr.operation().mod() != null) //TODO voir si gérer comme ça ça passe (exp_mod surement pas quoi)
-                value %= getValue(expr.operation().mod().value(),s);
+                value %= getValue(expr.operation().mod().value(), s);
         }
         return value;
     }
@@ -45,11 +45,10 @@ public final class ExprHandler {
 
     public static long handleOperation(ProbabilisticLanguageParser.ExprContext expr, State s, long value) {
         try {
-            long value2 = getValue(expr.operation().value(),s);
+            long value2 = getValue(expr.operation().value(), s);
             if (expr.operation().op().POW() != null) {
-                return (long) Math.pow(value,value2);
-            }
-           else return (int) engine.eval(value + expr.operation().op().getText() + value2 );
+                return (long) Math.pow(value, value2);
+            } else return (int) engine.eval(value + expr.operation().op().getText() + value2);
         } catch (ScriptException e) {
             e.printStackTrace();
         }
@@ -57,18 +56,19 @@ public final class ExprHandler {
     }
 
     public static boolean handleCondition(ProbabilisticLanguageParser.CondContext condition, State s) throws ScriptException {
-        ProbabilisticLanguageParser.CompContext comp  = condition.comp();
+        ProbabilisticLanguageParser.CompContext comp = condition.comp();
         long value1 = handleExpr(condition.expr(0), s);
-        long value2 = handleExpr(condition.expr(1),s);
+        long value2 = handleExpr(condition.expr(1), s);
         return (boolean) engine.eval(value1 + comp.getText() + value2);
     }
 
     /**
      * Vérifie si une boucle est infinie, et donc si le programme termine bien
+     *
      * @param p
      * @return
      */
-    public static boolean checkInfiniteLoop(Program p, State s) throws ScriptException, InfiniteProgramException{
+    public static void checkInfiniteLoop(Program p, State s) throws ScriptException, InfiniteProgramException {
         ProbabilisticLanguageParser.VarContext varWhile = p.getCommand(0).whileStatement().cond().expr(0).value().var();
         if (varWhile == null) {
             if (p.getCommand(0).whileStatement().cond().expr(1).value().var() != null) {
@@ -79,28 +79,51 @@ public final class ExprHandler {
                     if (command.affectation() != null) {
                         TerminalNode varCommand = command.affectation().var().IDENT();
                         if (varCommand.getText().equals(varWhile.IDENT().getText())) {
-                            affectationFound = true;
+                            affectationFound = checkAffectationForLoop(p.getCommand(0).whileStatement().cond(), command.affectation());
                             System.out.println("j'ai trouvé une affectation avec la bonne variable");
-                            // Vérification de l'utilité de l'opération réalisée (si débouchera sur une sortie du while)
-                            ProbabilisticLanguageParser.CompContext comparator = p.getCommand(0).whileStatement().cond().comp();
                         } else {
                             System.out.println("pas une affectation avec la bonne variable");
                         }
                     }
                 }
                 if (!affectationFound) {
-                    throw new InfiniteProgramException("Programme infini");
+                    throw new InfiniteProgramException("Programme infini car pas d'affectation pour sortir de la boucle while");
                 }
             } else {
-                System.out.println("Pas de variable dans le while");
-                return handleCondition(p.getCommand(0).whileStatement().cond(), s);
+                if(handleCondition(p.getCommand(0).whileStatement().cond(), s)) {
+                    throw new InfiniteProgramException("Programme infini car condition toujours vérifiée sans variables");
+                }
             }
         } else {
             if (p.getCommand(0).whileStatement().cond().expr(1).value().var() != null) {
-                System.out.println("Deux variables dans le while");
             } else {
                 System.out.println("Variable avant le signe");
             }
+        }
+    }
+
+    /**
+     * @param cond
+     * @param affectation
+     * @return
+     */
+    public static boolean checkAffectationForLoop(ProbabilisticLanguageParser.CondContext cond, ProbabilisticLanguageParser.AffectationContext affectation) {
+        if (cond.comp().getText() == "EQ") {
+            if (affectation.expr().operation() == null) {
+                if(affectation.expr().value().var() != null) {
+
+                } else {
+                    if (cond.expr(0).value().var() == null) {
+
+                    } else {
+
+                    }
+                }
+            }
+
+
+        } else if (cond.comp().getText() == "LT") {
+
         }
         return false;
     }
