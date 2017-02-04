@@ -8,8 +8,8 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         try {
-            System.out.println("Distributions pour CPA-EG");
-            DistributionTransformer.getFinalDistribution("out/production/Projet1/FichiersTest/CPA-EG");
+            //System.out.println("Distributions pour CPA-EG");
+            //DistributionTransformer.getFinalDistribution("out/production/Projet1/FichiersTest/CPA-EG");
             System.out.println();
             System.out.println();
             System.out.println("Distributions pour le fichier test");

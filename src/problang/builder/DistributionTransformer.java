@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import problang.elems.*;
+import problang.exceptions.InfiniteProgramException;
 
 import javax.script.ScriptException;
 import java.io.FileReader;
@@ -185,8 +186,10 @@ public final class DistributionTransformer {
     private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
         Program p = c.getProgram();
         State s = c.getState();
-
         try {
+            if (checkInfiniteLoop(p, s)) {
+                throw new InfiniteProgramException("Programme infini");
+            }
             boolean cond = handleCondition(p.getCommand(0).whileStatement().cond(),s);
             if(cond){
                 List<ProbabilisticLanguageParser.CommandContext> liste = p.getCommand(0).whileStatement().commands().command();
@@ -202,6 +205,8 @@ public final class DistributionTransformer {
             }
         } catch (ScriptException e) {
             e.printStackTrace();
+        } catch (InfiniteProgramException e) {
+            System.out.println(e.getMessage());
         }
         return d1;
     }

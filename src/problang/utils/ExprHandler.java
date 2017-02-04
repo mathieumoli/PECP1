@@ -1,6 +1,7 @@
 package problang.utils;
 
 import antlr.ProbabilisticLanguageParser;
+import problang.elems.Program;
 import problang.elems.State;
 
 import javax.script.ScriptEngine;
@@ -58,5 +59,41 @@ public final class ExprHandler {
         long value1 = handleExpr(condition.expr(0), s);
         long value2 = handleExpr(condition.expr(1),s);
         return (boolean) engine.eval(value1 + comp.getText() + value2);
+    }
+
+    /**
+     * Vérifie si une boucle est infinie, et donc si le programme termine bien
+     * @param p
+     * @return
+     */
+    public static boolean checkInfiniteLoop(Program p, State s) throws ScriptException {
+        ProbabilisticLanguageParser.VarContext varWhile = p.getCommand(0).whileStatement().cond().expr(0).value().var();
+        if (varWhile == null) {
+            if (p.getCommand(0).whileStatement().cond().expr(1).value().var() != null) {
+                System.out.println("Variable après le signe");
+                varWhile = p.getCommand(0).whileStatement().cond().expr(1).value().var();
+            } else {
+                System.out.println("Pas de variable dans le while");
+                if (handleCondition(p.getCommand(0).whileStatement().cond(), s)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            if (p.getCommand(0).whileStatement().cond().expr(1).value().var() != null) {
+                System.out.println("Deux variables dans le while");
+            } else {
+                System.out.println("Variable avant le signe");
+            }
+        }
+        for (ProbabilisticLanguageParser.CommandContext command : p.getCommands()) {
+            ProbabilisticLanguageParser.VarContext varCommand = command.affectation().var();
+            if (varCommand != null && varCommand == varWhile) {
+                // Vérification de l'utilité de l'opération réalisée (si débouchera sur une sortie du while)
+                ProbabilisticLanguageParser.CompContext comparator = p.getCommand(0).whileStatement().cond().comp();
+            }
+        }
+        return false;
     }
 }
