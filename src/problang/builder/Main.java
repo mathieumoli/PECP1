@@ -1,5 +1,7 @@
 package problang.builder;
 
+import problang.exceptions.InfiniteProgramException;
+
 import java.io.IOException;
 
 /**
@@ -16,6 +18,8 @@ public class Main {
             DistributionTransformer.getFinalDistribution("out/production/Projet1/FichiersTest/affectation");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InfiniteProgramException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

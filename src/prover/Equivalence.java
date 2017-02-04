@@ -3,6 +3,7 @@ package prover;
 import problang.builder.DistributionTransformer;
 import problang.elems.Configuration;
 import problang.elems.Distribution;
+import problang.exceptions.InfiniteProgramException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Map;
  * Created by lorynf on 28/01/17.
  */
 public class Equivalence {
-    public static boolean isEquivalent(String filePath1, String filePath2, List<String> vars) throws IOException {
+    public static boolean isEquivalent(String filePath1, String filePath2, List<String> vars) throws IOException, InfiniteProgramException {
         // Récupération des distributions finales:
         Distribution d1 = DistributionTransformer.getFinalDistribution(filePath1);
         Distribution d2 = DistributionTransformer.getFinalDistribution(filePath2);
@@ -130,6 +131,8 @@ public class Equivalence {
             System.out.println("Equivalent: "+ ((isEquivalent(filePath1,filePath2,vars)) ? "oui" : "non"));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InfiniteProgramException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

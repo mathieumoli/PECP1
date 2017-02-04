@@ -22,7 +22,7 @@ import static problang.utils.ExprHandler.*;
 public final class DistributionTransformer {
     static Map<String, Function> functions = new HashMap<>();
 
-    public static Distribution getFinalDistribution(String filePath) throws IOException {
+    public static Distribution getFinalDistribution(String filePath) throws IOException, InfiniteProgramException {
         // initialiser le lexer et le parser
         ANTLRInputStream in = new ANTLRInputStream(new FileReader(filePath));
         ProbabilisticLanguageLexer lexer = new ProbabilisticLanguageLexer(in);
@@ -70,7 +70,7 @@ public final class DistributionTransformer {
         return distribution;
     }
 
-    private static Distribution transformation(Distribution d) {
+    private static Distribution transformation(Distribution d) throws InfiniteProgramException {
         // La distribution finale à remplir
         Distribution d1 = new Distribution();
 
@@ -183,13 +183,11 @@ public final class DistributionTransformer {
         return d1;
     }
 
-    private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) {
+    private static Distribution applyWhileRule(Configuration c, Distribution d1, Distribution d) throws InfiniteProgramException {
         Program p = c.getProgram();
         State s = c.getState();
         try {
-            if (checkInfiniteLoop(p, s)) {
-                throw new InfiniteProgramException("Programme infini");
-            }
+            checkInfiniteLoop(p, s);
             boolean cond = handleCondition(p.getCommand(0).whileStatement().cond(),s);
             if(cond){
                 List<ProbabilisticLanguageParser.CommandContext> liste = p.getCommand(0).whileStatement().commands().command();
@@ -205,8 +203,6 @@ public final class DistributionTransformer {
             }
         } catch (ScriptException e) {
             e.printStackTrace();
-        } catch (InfiniteProgramException e) {
-            System.out.println(e.getMessage());
         }
         return d1;
     }

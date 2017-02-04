@@ -1,8 +1,10 @@
 package problang.utils;
 
 import antlr.ProbabilisticLanguageParser;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import problang.elems.Program;
 import problang.elems.State;
+import problang.exceptions.InfiniteProgramException;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -66,32 +68,38 @@ public final class ExprHandler {
      * @param p
      * @return
      */
-    public static boolean checkInfiniteLoop(Program p, State s) throws ScriptException {
+    public static boolean checkInfiniteLoop(Program p, State s) throws ScriptException, InfiniteProgramException{
         ProbabilisticLanguageParser.VarContext varWhile = p.getCommand(0).whileStatement().cond().expr(0).value().var();
         if (varWhile == null) {
             if (p.getCommand(0).whileStatement().cond().expr(1).value().var() != null) {
                 System.out.println("Variable après le signe");
                 varWhile = p.getCommand(0).whileStatement().cond().expr(1).value().var();
+                boolean affectationFound = false;
+                for (ProbabilisticLanguageParser.CommandContext command : p.getCommand(0).whileStatement().commands().command()) {
+                    if (command.affectation() != null) {
+                        TerminalNode varCommand = command.affectation().var().IDENT();
+                        if (varCommand.getText().equals(varWhile.IDENT().getText())) {
+                            affectationFound = true;
+                            System.out.println("j'ai trouvé une affectation avec la bonne variable");
+                            // Vérification de l'utilité de l'opération réalisée (si débouchera sur une sortie du while)
+                            ProbabilisticLanguageParser.CompContext comparator = p.getCommand(0).whileStatement().cond().comp();
+                        } else {
+                            System.out.println("pas une affectation avec la bonne variable");
+                        }
+                    }
+                }
+                if (!affectationFound) {
+                    throw new InfiniteProgramException("Programme infini");
+                }
             } else {
                 System.out.println("Pas de variable dans le while");
-                if (handleCondition(p.getCommand(0).whileStatement().cond(), s)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return handleCondition(p.getCommand(0).whileStatement().cond(), s);
             }
         } else {
             if (p.getCommand(0).whileStatement().cond().expr(1).value().var() != null) {
                 System.out.println("Deux variables dans le while");
             } else {
                 System.out.println("Variable avant le signe");
-            }
-        }
-        for (ProbabilisticLanguageParser.CommandContext command : p.getCommands()) {
-            ProbabilisticLanguageParser.VarContext varCommand = command.affectation().var();
-            if (varCommand != null && varCommand == varWhile) {
-                // Vérification de l'utilité de l'opération réalisée (si débouchera sur une sortie du while)
-                ProbabilisticLanguageParser.CompContext comparator = p.getCommand(0).whileStatement().cond().comp();
             }
         }
         return false;
