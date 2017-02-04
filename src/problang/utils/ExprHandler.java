@@ -74,19 +74,16 @@ public final class ExprHandler {
                 throw new InfiniteProgramException("Programme infini car condition toujours vérifiée sans variables");
             }
         } else {
-            if (varWhile == null) {
-                System.out.println("Variable après le signe");
+            if (varWhile == null) { // Variable après le signe si pas avant
                 varWhile = p.getCommand(0).whileStatement().cond().expr(1).value().var();
-            } else {
-                System.out.println("Variable avant le signe");
             }
             boolean affectationFound = false;
+            // Boucle de recherche d'affectation
             for (ProbabilisticLanguageParser.CommandContext command : p.getCommand(0).whileStatement().commands().command()) {
                 if (command.affectation() != null) {
                     TerminalNode varCommand = command.affectation().var().IDENT();
                     if (varCommand.getText().equals(varWhile.IDENT().getText())) {
                         affectationFound = checkAffectationForLoop(p.getCommand(0).whileStatement().cond(), command.affectation());
-                        System.out.println("j'ai trouvé une affectation avec la bonne variable");
                     } else {
                         System.out.println("pas une affectation avec la bonne variable");
                     }
@@ -100,30 +97,28 @@ public final class ExprHandler {
 
 
 
-/**
- * Vérifie si une affectation modifiera le comportement d'une boucle
- * @param cond
- * @param affectation
- * @return
- */
-public static boolean checkAffectationForLoop(ProbabilisticLanguageParser.CondContext cond, ProbabilisticLanguageParser.AffectationContext affectation) throws InfiniteProgramException {
+    /**
+     * Vérifie si une affectation modifiera le comportement d'une boucle
+     * @param cond
+     * @param affectation
+     * @return
+     */
+    public static boolean checkAffectationForLoop(ProbabilisticLanguageParser.CondContext cond, ProbabilisticLanguageParser.AffectationContext affectation) throws InfiniteProgramException {
         if (cond.comp().getText().equals("EQ")) {
-        if (affectation.expr().operation() == null) {
-        if (cond.expr(0).value().var() != null) {
-        if (cond.expr(1).value().getText().equals(affectation.expr().value().getText())) {
-        return false;
-        }
-        } else {
-        if (cond.expr(0).value().getText() == affectation.expr().value().getText()) {
-        return false;
-        }
-        }
-        }
-
-
+            if (affectation.expr().operation() == null) {
+                if (cond.expr(0).value().var() != null) {
+                    if (cond.expr(1).value().getText().equals(affectation.expr().value().getText())) {
+                        return false;
+                    }
+                } else {
+                    if (cond.expr(0).value().getText() == affectation.expr().value().getText()) {
+                        return false;
+                    }
+                }
+            }
         } else if (cond.comp().getText() == "LT") {
 
         }
         return false;
-        }
-        }
+    }
+}

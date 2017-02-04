@@ -1,6 +1,6 @@
 initial_state: [x:0, y:0]
 x:=2;
 y:=2;
-while(1 > 0)
+while(y == 2)
 do
-	{x:= 2}
+	{x:= 3}
