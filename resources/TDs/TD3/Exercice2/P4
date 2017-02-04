@@ -1,0 +1,4 @@
+initial_state: [x:0, z:0, q:11]
+
+z := {0, 1};
+x := ZQ(q)
