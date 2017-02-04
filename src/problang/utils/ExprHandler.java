@@ -85,7 +85,7 @@ public final class ExprHandler {
                     if (varCommand.getText().equals(varWhile.IDENT().getText())) {
                         affectationFound = checkAffectationForLoop(p.getCommand(0).whileStatement().cond(), command.affectation());
                     } else {
-                        System.out.println("pas une affectation avec la bonne variable");
+                        System.out.println("Pas une affectation avec la bonne variable");
                     }
                 }
             }
@@ -104,7 +104,7 @@ public final class ExprHandler {
      * @return
      */
     public static boolean checkAffectationForLoop(ProbabilisticLanguageParser.CondContext cond, ProbabilisticLanguageParser.AffectationContext affectation) throws InfiniteProgramException {
-        if (cond.comp().getText().equals("EQ")) {
+        if (cond.comp().getText().equals("==")) {
             if (affectation.expr().operation() == null) {
                 if (cond.expr(0).value().var() != null) {
                     if (cond.expr(1).value().getText().equals(affectation.expr().value().getText())) {
@@ -116,9 +116,26 @@ public final class ExprHandler {
                     }
                 }
             }
-        } else if (cond.comp().getText() == "LT") {
-
+        } else {
+            boolean firstOperand = (cond.expr(0).value().var() != null);
+            if ((firstOperand && cond.comp().getText().equals("<")) || (!firstOperand && cond.comp().getText().equals(">"))) {
+                if (affectation.expr().operation() == null) {
+                    return false;
+                } else {
+                    if(!affectation.expr().operation().op().getText().equals("+")) {
+                        return false;
+                    }
+                }
+            } else if ((firstOperand && cond.comp().getText().equals(">")) || (!firstOperand && cond.comp().getText().equals("<"))) {
+                if (affectation.expr().operation() == null) {
+                    return false;
+                } else {
+                    if(!affectation.expr().operation().op().getText().equals("-")) {
+                        return false;
+                    }
+                }
+            }
         }
-        return false;
+        return true;
     }
 }
