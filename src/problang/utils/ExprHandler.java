@@ -64,67 +64,66 @@ public final class ExprHandler {
 
     /**
      * Vérifie si une boucle est infinie, et donc si le programme termine bien
-     *
      * @param p
      * @return
      */
     public static void checkInfiniteLoop(Program p, State s) throws ScriptException, InfiniteProgramException {
         ProbabilisticLanguageParser.VarContext varWhile = p.getCommand(0).whileStatement().cond().expr(0).value().var();
-        if (varWhile == null) {
-            if (p.getCommand(0).whileStatement().cond().expr(1).value().var() != null) {
-                System.out.println("Variable après le signe");
-                varWhile = p.getCommand(0).whileStatement().cond().expr(1).value().var();
-                boolean affectationFound = false;
-                for (ProbabilisticLanguageParser.CommandContext command : p.getCommand(0).whileStatement().commands().command()) {
-                    if (command.affectation() != null) {
-                        TerminalNode varCommand = command.affectation().var().IDENT();
-                        if (varCommand.getText().equals(varWhile.IDENT().getText())) {
-                            affectationFound = checkAffectationForLoop(p.getCommand(0).whileStatement().cond(), command.affectation());
-                            System.out.println("j'ai trouvé une affectation avec la bonne variable");
-                        } else {
-                            System.out.println("pas une affectation avec la bonne variable");
-                        }
-                    }
-                }
-                if (!affectationFound) {
-                    throw new InfiniteProgramException("Programme infini car pas d'affectation pour sortir de la boucle while");
-                }
-            } else {
-                if(handleCondition(p.getCommand(0).whileStatement().cond(), s)) {
-                    throw new InfiniteProgramException("Programme infini car condition toujours vérifiée sans variables");
-                }
+        if(varWhile == null && p.getCommand(0).whileStatement().cond().expr(1).value().var() == null) {
+            if(handleCondition(p.getCommand(0).whileStatement().cond(), s)) {
+                throw new InfiniteProgramException("Programme infini car condition toujours vérifiée sans variables");
             }
         } else {
-            if (p.getCommand(0).whileStatement().cond().expr(1).value().var() != null) {
+            if (varWhile == null) {
+                System.out.println("Variable après le signe");
+                varWhile = p.getCommand(0).whileStatement().cond().expr(1).value().var();
             } else {
                 System.out.println("Variable avant le signe");
+            }
+            boolean affectationFound = false;
+            for (ProbabilisticLanguageParser.CommandContext command : p.getCommand(0).whileStatement().commands().command()) {
+                if (command.affectation() != null) {
+                    TerminalNode varCommand = command.affectation().var().IDENT();
+                    if (varCommand.getText().equals(varWhile.IDENT().getText())) {
+                        affectationFound = checkAffectationForLoop(p.getCommand(0).whileStatement().cond(), command.affectation());
+                        System.out.println("j'ai trouvé une affectation avec la bonne variable");
+                    } else {
+                        System.out.println("pas une affectation avec la bonne variable");
+                    }
+                }
+            }
+            if (!affectationFound) {
+                throw new InfiniteProgramException("Programme infini car pas d'affectation pour sortir de la boucle while");
             }
         }
     }
 
-    /**
-     * @param cond
-     * @param affectation
-     * @return
-     */
-    public static boolean checkAffectationForLoop(ProbabilisticLanguageParser.CondContext cond, ProbabilisticLanguageParser.AffectationContext affectation) {
-        if (cond.comp().getText() == "EQ") {
-            if (affectation.expr().operation() == null) {
-                if(affectation.expr().value().var() != null) {
 
-                } else {
-                    if (cond.expr(0).value().var() == null) {
 
-                    } else {
-
-                    }
-                }
-            }
+/**
+ * Vérifie si une affectation modifiera le comportement d'une boucle
+ * @param cond
+ * @param affectation
+ * @return
+ */
+public static boolean checkAffectationForLoop(ProbabilisticLanguageParser.CondContext cond, ProbabilisticLanguageParser.AffectationContext affectation) throws InfiniteProgramException {
+        if (cond.comp().getText().equals("EQ")) {
+        if (affectation.expr().operation() == null) {
+        if (cond.expr(0).value().var() != null) {
+        if (cond.expr(1).value().getText().equals(affectation.expr().value().getText())) {
+        return false;
+        }
+        } else {
+        if (cond.expr(0).value().getText() == affectation.expr().value().getText()) {
+        return false;
+        }
+        }
+        }
 
 
         } else if (cond.comp().getText() == "LT") {
 
         }
         return false;
-    }
-}
+        }
+        }

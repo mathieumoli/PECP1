@@ -187,9 +187,9 @@ public final class DistributionTransformer {
         Program p = c.getProgram();
         State s = c.getState();
         try {
-            checkInfiniteLoop(p, s);
             boolean cond = handleCondition(p.getCommand(0).whileStatement().cond(),s);
             if(cond){
+                checkInfiniteLoop(p, s);
                 List<ProbabilisticLanguageParser.CommandContext> liste = p.getCommand(0).whileStatement().commands().command();
                 liste.addAll(p.getCommands());
                 Program p1 = new Program(liste);
