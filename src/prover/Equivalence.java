@@ -6,6 +6,7 @@ import problang.elems.Distribution;
 import problang.exceptions.InfiniteProgramException;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -38,11 +39,20 @@ public class Equivalence {
         }
 
         // Calcul des probabilités
-        Map<Map<String,Long>,Double> probabilities1 = getProbabilities(d1,values, new HashMap<>());
-        Map<Map<String,Long>,Double> probabilities2 = getProbabilities(d2,values, new HashMap<>());
+        Map<Map<String,Long>,BigDecimal> probabilities1 = getProbabilities(d1,values, new HashMap<>());
+        Map<Map<String,Long>,BigDecimal> probabilities2 = getProbabilities(d2,values, new HashMap<>());
         System.out.println(probabilities1);
         System.out.println(probabilities2);
-        return getProbabilities(d1,values, new HashMap<>()).equals(getProbabilities(d2,values, new HashMap<>()));
+        return isProbabilitiesEquals(probabilities1, probabilities2);//getProbabilities(d1,values, new HashMap<>()).equals(getProbabilities(d2,values, new HashMap<>()));
+    }
+
+    private static boolean isProbabilitiesEquals(Map<Map<String, Long>, BigDecimal> probabilities1, Map<Map<String, Long>, BigDecimal> probabilities2) {
+        for (Map<String,Long> varValues : probabilities1.keySet()) {
+            if (probabilities1.get(varValues).compareTo(probabilities2.get(varValues)) != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static List<Long> getAllValues(Set<Configuration> configurations, String var) {
@@ -58,8 +68,8 @@ public class Equivalence {
         return ret;
     }
 
-    private static Map<Map<String,Long>,Double> getProbabilities(Distribution d, Map<String, List<Long>> varValues, Map<String,Long> values) {
-        Map<Map<String,Long>,Double> probs = new HashMap<>();
+    private static Map<Map<String,Long>,BigDecimal> getProbabilities(Distribution d, Map<String, List<Long>> varValues, Map<String,Long> values) {
+        Map<Map<String,Long>,BigDecimal> probs = new HashMap<>();
         if (varValues.isEmpty()) {
             probs.put(values,getProbability(d, values));
         } else {
@@ -76,8 +86,8 @@ public class Equivalence {
         return probs;
     }
 
-    private static double getProbability(Distribution d, Map<String,Long> values) {
-        double prob = 0.0;
+    private static BigDecimal getProbability(Distribution d, Map<String,Long> values) {
+        BigDecimal prob = BigDecimal.ZERO;
         for (Configuration configuration : d.getElements().keySet()) {
             boolean goodConfig = true;
             for (String var : values.keySet()) {
@@ -87,7 +97,7 @@ public class Equivalence {
                 }
             }
             if (goodConfig)
-                prob += d.getElements().get(configuration);
+                prob = prob.add(d.getElements().get(configuration));
         }
         return prob;
     }
