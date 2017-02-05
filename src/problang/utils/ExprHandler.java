@@ -83,9 +83,11 @@ public final class ExprHandler {
                 if (command.affectation() != null) {
                     TerminalNode varCommand = command.affectation().var().IDENT();
                     if (varCommand.getText().equals(varWhile.IDENT().getText())) {
-                        affectationFound = checkAffectationForLoop(p.getCommand(0).whileStatement().cond(), command.affectation());
-                    } else {
-                        System.out.println("Pas une affectation avec la bonne variable");
+                        if (command.affectation().probFunc() != null) {
+                            affectationFound=false;
+                        } else {
+                            affectationFound = checkAffectationForLoop(p.getCommand(0).whileStatement().cond(), command.affectation());
+                        }
                     }
                 }
             }

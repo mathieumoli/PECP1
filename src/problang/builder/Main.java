@@ -29,7 +29,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InfiniteProgramException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
