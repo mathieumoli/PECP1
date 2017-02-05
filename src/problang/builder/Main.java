@@ -12,34 +12,35 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-        try {
-            File tdFiles = new File("out/production/Projet1/TDs");
-            for (File subFile : getAllSubFiles(tdFiles)) {
-                System.out.println("Distribution pour le fichier "+subFile.getPath());
-                DistributionTransformer.getFinalDistribution(subFile.getPath());
+        File tdFiles = new File("out/production/Projet1/TDs");
+        for (File subFile : getAllSubFiles(tdFiles)) {
+            try {
+                System.out.println("Distribution pour le fichier " + subFile.getPath());
+                try {
+                    DistributionTransformer.getFinalDistribution(subFile.getPath());
+                } catch (InfiniteProgramException e) {
+                    System.err.println(e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("\n\n");
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            //System.out.println("Distributions pour CPA-EG");
-            //DistributionTransformer.getFinalDistribution("out/production/Projet1/FichiersTest/CPA-EG");
-            /*System.out.println();
-            System.out.println();
-            System.out.println("Distributions pour le fichier test");
-            DistributionTransformer.getFinalDistribution("out/production/Projet1/FichiersTest/affectation");
-        */
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InfiniteProgramException e) {
-            System.err.println(e.getMessage());
+
         }
     }
 
     private static List<File> getAllSubFiles (File f) {
         List<File> fileList = new ArrayList<>();
-        for (File subFile : f.listFiles()) {
-            if (subFile.isDirectory()) {
-                fileList.addAll(getAllSubFiles(subFile));
-            } else {
-                fileList.add(subFile);
+        if (f.isDirectory()) {
+            for (File subFile : f.listFiles()) {
+                if (subFile.isDirectory()) {
+                    fileList.addAll(getAllSubFiles(subFile));
+                } else {
+                    fileList.add(subFile);
+                }
             }
         }
         return fileList;

@@ -64,8 +64,6 @@ public final class ExprHandler {
 
     /**
      * Vérifie si une boucle est infinie, et donc si le programme termine bien
-     * @param p
-     * @return
      */
     public static void checkInfiniteLoop(Program p, State s) throws ScriptException, InfiniteProgramException {
         ProbabilisticLanguageParser.VarContext varWhile = p.getCommand(0).whileStatement().cond().expr(0).value().var();
@@ -101,9 +99,6 @@ public final class ExprHandler {
 
     /**
      * Vérifie si une affectation modifiera le comportement d'une boucle
-     * @param cond
-     * @param affectation
-     * @return
      */
     public static boolean checkAffectationForLoop(ProbabilisticLanguageParser.CondContext cond, ProbabilisticLanguageParser.AffectationContext affectation) throws InfiniteProgramException {
         if (cond.comp().getText().equals("==")) {
@@ -113,7 +108,7 @@ public final class ExprHandler {
                         return false;
                     }
                 } else {
-                    if (cond.expr(0).value().getText() == affectation.expr().value().getText()) {
+                    if (cond.expr(0).value().getText().equals(affectation.expr().value().getText())) {
                         return false;
                     }
                 }

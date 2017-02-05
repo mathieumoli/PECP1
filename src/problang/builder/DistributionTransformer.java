@@ -56,6 +56,8 @@ public final class DistributionTransformer {
                 functions.put(functionName, new Function(functionName, functionVars, functionCommands));
             }
         }
+
+        //On boucle jusqu'à avoir une distribution finale
         boolean goForward;
         Distribution distribution = initialDistribution;
         do {
@@ -122,9 +124,7 @@ public final class DistributionTransformer {
         // Premier cas : on affecte une expression
         if (p.getCommand(0).affectation().expr() != null) {
             long value = handleExpr(p.getCommand(0).affectation().expr(), s);
-
             s.getMemory().put(var, value);
-
             d1.addElement(new Configuration(p1, s), d.getElements().get(c));
         }
         // Deuxième cas : on affecte une fonction probabiliste
