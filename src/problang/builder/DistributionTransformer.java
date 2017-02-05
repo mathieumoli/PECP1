@@ -219,9 +219,9 @@ public final class DistributionTransformer {
         String adversaryVar = p.getCommand(0).adversaryCode().var().getText();
 
         // On génère la probabilité que la variable vaille 0 et on en déduit la  probabilité pour 1
-        //Random r = new Random();
+        Random r = new Random();
         //double prob0 = r.nextDouble();
-        BigDecimal prob0 = BigDecimal.valueOf(0.5);
+        BigDecimal prob0 = BigDecimal.valueOf(r.nextDouble());
         BigDecimal prob1 = BigDecimal.ONE.subtract(prob0);
 
         // On crée la configuration associé à chaque probabilité et on les ajoute à la distribution
