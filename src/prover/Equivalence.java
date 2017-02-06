@@ -21,7 +21,7 @@ public class Equivalence {
         System.out.println();
 
         // Récupération de toutes les valeurs possibles pour les variables dans vars:
-        Map<String, List<Long>> values = new HashMap<>();
+        Map<String, List<Long>> allPossibleValues = new HashMap<>();
         for (String var : vars) {
             List<Long> varValues = getAllValues(d1.getElements().keySet(), var);
             List<Long> varValues2 = getAllValues(d2.getElements().keySet(), var);
@@ -35,15 +35,15 @@ public class Equivalence {
                     return false;
                 }
             }
-            values.put(var, varValues);
+            allPossibleValues.put(var, varValues);
         }
 
         // Calcul des probabilités
-        Map<Map<String,Long>,BigDecimal> probabilities1 = getProbabilities(d1,values, new HashMap<>());
-        Map<Map<String,Long>,BigDecimal> probabilities2 = getProbabilities(d2,values, new HashMap<>());
+        Map<Map<String,Long>,BigDecimal> probabilities1 = getProbabilities(d1,allPossibleValues, new HashMap<>());
+        Map<Map<String,Long>,BigDecimal> probabilities2 = getProbabilities(d2,allPossibleValues, new HashMap<>());
         System.out.println(probabilities1);
         System.out.println(probabilities2);
-        return isProbabilitiesEquals(probabilities1, probabilities2);//getProbabilities(d1,values, new HashMap<>()).equals(getProbabilities(d2,values, new HashMap<>()));
+        return isProbabilitiesEquals(probabilities1, probabilities2);
     }
 
     private static boolean isProbabilitiesEquals(Map<Map<String, Long>, BigDecimal> probabilities1, Map<Map<String, Long>, BigDecimal> probabilities2) {
@@ -68,19 +68,19 @@ public class Equivalence {
         return ret;
     }
 
-    private static Map<Map<String,Long>,BigDecimal> getProbabilities(Distribution d, Map<String, List<Long>> varValues, Map<String,Long> values) {
+    private static Map<Map<String,Long>,BigDecimal> getProbabilities(Distribution d, Map<String, List<Long>> possibleValues, Map<String,Long> values) {
         Map<Map<String,Long>,BigDecimal> probs = new HashMap<>();
-        if (varValues.isEmpty()) {
+        if (possibleValues.isEmpty()) {
             probs.put(values,getProbability(d, values));
         } else {
-            List<String> vars = new ArrayList<>(varValues.keySet());
-            List<Long> v = varValues.get(vars.get(0));
+            List<String> vars = new ArrayList<>(possibleValues.keySet());
+            List<Long> v = possibleValues.get(vars.get(0));
             for (long l : v) {
-                Map<String,List<Long>> varValues2 = new HashMap<>(varValues);
-                varValues2.remove(vars.get(0));
+                Map<String,List<Long>> possibleValues2 = new HashMap<>(possibleValues);
+                possibleValues2.remove(vars.get(0));
                 Map<String,Long> values2 = new HashMap<>(values);
                 values2.put(vars.get(0), l);
-                probs.putAll(getProbabilities(d,varValues2,values2));
+                probs.putAll(getProbabilities(d,possibleValues2,values2));
             }
         }
         return probs;
