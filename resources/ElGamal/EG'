@@ -1,0 +1,6 @@
+initial_state : [b:0, k_d:0, r:0, q:11, a:0, z:0]
+
+r := ZQ(q)*;
+k_d := ZQ(q)*;
+z:= ZQ(q)*;
+b := {0,1}

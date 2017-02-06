@@ -60,8 +60,10 @@ public class Main {
         List<String> varY = new ArrayList<>(); varY.add("y");
         List<String> varXY = new ArrayList<>(); varXY.add("x"); varXY.add("y");
 
-        String filePath1 = "out/production/Projet1/ElGamal/CPA-EG";
-        String filePath2 = "out/production/Projet1/ElGamal/DDH0";
+        String CPA_EG = "out/production/Projet1/ElGamal/CPA-EG";
+        String DDH0 = "out/production/Projet1/ElGamal/DDH0";
+        String DDH1 = "out/production/Projet1/ElGamal/DDH1";
+        String EGbis = "out/production/Projet1/ElGamal/EG\'";
         List<String> vars = new ArrayList<>();
         vars.add("a");
         vars.add("b");
@@ -76,7 +78,9 @@ public class Main {
             System.out.println("Equivalence entre P4 et P5 pour la variable z: "+((isEquivalent(p4,p5,varY)) ? "oui" : "non"));
 
             System.out.println("\n");
-            System.out.println("Equivalent: "+ ((isEquivalent(filePath1,filePath2,vars)) ? "oui" : "non"));
+            System.out.println("Equivalent: "+ ((isEquivalent(CPA_EG,DDH0,vars)) ? "oui" : "non"));
+            System.out.println("\n");
+            System.out.println("Equivalent: "+ ((isEquivalent(EGbis,DDH1,vars)) ? "oui" : "non"));
 
         } catch (IOException e) {
             e.printStackTrace();
